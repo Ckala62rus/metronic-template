@@ -19,6 +19,11 @@
         <link href="{{ asset("template/css/themes/layout/aside/dark.css") }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset("template/css/themes/layout/brand/dark.css") }}" rel="stylesheet" type="text/css"/>
 
+        <style>
+            .form-control {
+                border: 1px solid #E4E6EF;
+            }
+        </style>
         <!-- Scripts -->
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])

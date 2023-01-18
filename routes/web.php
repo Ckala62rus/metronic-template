@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Redirect;
@@ -52,6 +53,8 @@ Route::middleware('auth')->group(function () {
     })->name('www');
 
     Route::get('dashboard/profile', [ProfileController::class, 'profilePage'])->name('metronic.profile');
+    Route::get('dashboard/lesson/create', [LessonController::class, 'create'])->name('metronic.lesson.create');
+    Route::post('dashboard/lesson', [LessonController::class, 'store'])->name('metronic.lesson.store');
 });
 
 require __DIR__.'/auth.php';

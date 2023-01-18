@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Contracts\LessonRepositoryInterface;
+use App\Contracts\LessonServiceInterface;
+use App\Repositories\LessonRepository;
+use App\Services\LessonService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(LessonRepositoryInterface::class, LessonRepository::class);
+        $this->app->bind(LessonServiceInterface::class, LessonService::class);
     }
 
     /**
