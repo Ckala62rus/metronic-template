@@ -1117,7 +1117,8 @@
                             <div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2"
                                  id="kt_quick_user_toggle">
                                 <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
-                                <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">Sean</span>
+<!--                                <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">Sean</span>-->
+                                <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{ $page.props.auth.user.name}}</span>
                                 <span class="symbol symbol-35 symbol-light-success">
                     <span class="symbol-label font-size-h5 font-weight-bold">S</span>
                 </span>
@@ -1840,11 +1841,10 @@
                                     </div>
                                 </div>
 
-
                                 <div class="d-flex flex-column mb-5 align-items-start">
                                     <div class="d-flex align-items-center">
                                         <div class="symbol symbol-circle symbol-40 mr-3">
-                                            <img alt="Pic" :src="'template/media/users/300_21.jpg'"/>
+                                            <img alt="Pic" :src="'/template/media/users/300_21.jpg'"/>
                                         </div>
                                         <div>
                                             <a href="#"
@@ -1857,7 +1857,6 @@
                                         Ok, Understood!
                                     </div>
                                 </div>
-
 
                                 <div class="d-flex flex-column mb-5 align-items-end">
                                     <div class="d-flex align-items-center">
@@ -1879,7 +1878,7 @@
                                 <div class="d-flex flex-column mb-5 align-items-start">
                                     <div class="d-flex align-items-center">
                                         <div class="symbol symbol-circle symbol-40 mr-3">
-                                            <img alt="Pic" :src="'template/media/users/300_12.jpg'"/>
+                                            <img alt="Pic" :src="'/template/media/users/300_12.jpg'"/>
                                         </div>
                                         <div>
                                             <a href="#"
@@ -1902,7 +1901,7 @@
                                                class="text-dark-75 text-hover-primary font-weight-bold font-size-h6">You</a>
                                         </div>
                                         <div class="symbol symbol-circle symbol-40 ml-3">
-                                            <img alt="Pic" :src="'template/media/users/300_21.jpg'"/>
+                                            <img alt="Pic" :src="'/template/media/users/300_21.jpg'"/>
                                         </div>
                                     </div>
                                     <div class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold text-right max-w-400px">

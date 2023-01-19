@@ -3,14 +3,13 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-custom rdp_statistic_mg">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            Создание статьи для обучения
-                        </h3>
-                        <div class="card-toolbar">
-                            <div class="example-tools justify-content-center">
-                                <span class="example-toggle" data-toggle="tooltip" title="View code"></span>
-                                <span class="example-copy" data-toggle="tooltip" title="Copy code"></span>
+                    <div class="card card-custom gutter-b">
+                        <div class="card-header">
+                            <div class="card-title flex-row flex-row-fluid flex-center justify-content-between">
+                                <h3 class="card-label">
+                                    Редактировать статью
+                                </h3>
+                                <Link :href="route('metronic.lesson.index')" as="button" method="get" class="btn btn-primary font-weight-bolder">Назад</Link>
                             </div>
                         </div>
                     </div>
@@ -22,7 +21,7 @@
                                 <div class="alert alert-custom alert-default" role="alert">
                                     <div class="alert-icon"><i class="flaticon-warning text-primary"></i></div>
                                     <div class="alert-text">
-                                        Сдесь вы можете создавать статьи для обучения
+                                        Сдесь вы можете отредактировать статью
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +54,6 @@
                         </div>
                     </form>
                     <!--end::Form-->
-
                 </div>
             </div>
         </div>
@@ -68,17 +66,29 @@ import Editor from  "@tinymce/tinymce-vue";
 
 export default {
     name: "LessonCreate",
+
     components: {
         Link,
         Editor
     },
+
+    props: {
+        id: {
+            type: Number,
+            required: true,
+        },
+    },
+
     data() {
         return {
             init: {
                 height: 500,
                 plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                toolbar: 'undo redo | blocks fontfamily fontsize |  bold italic underline strikethrough codesample | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
                 file_picker_callback : this.elFinderBrowser,
+                relative_urls: false,
+                document_base_url : 'http://template/',
+                convert_urls : true,
             },
             form: {
                 title: '',
@@ -92,6 +102,7 @@ export default {
             },
         }
     },
+
     methods: {
         elFinderBrowser (callback, value, meta) {
             tinymce.activeEditor.windowManager.openUrl({
@@ -134,10 +145,10 @@ export default {
         saveLesson(){
             this.resetErrors();
 
-            axios.post('/dashboard/lessons', this.form)
+            axios.put('/dashboard/lessons/' + this.id, this.form)
                 .then(response => {
                     console.log(response);
-                    window.location.href = '/dashboard/lessons'
+                    window.location.href = '/dashboard/lessons';
                 })
                 .catch(err => {
                     let errors = err.response.data.errors
@@ -158,7 +169,22 @@ export default {
                 errorTitle: false
             };
         },
+
+        getLesson(id){
+            axios.get('/dashboard/lessons/' + id)
+            .then(resp => {
+                let lesson = resp.data.data.lesson;
+
+                this.form.title = lesson.title;
+                this.form.description = lesson.description;
+                this.form.text = lesson.text;
+            })
+        },
     },
+
+    mounted() {
+        this.getLesson(this.id);
+    }
 }
 </script>
 

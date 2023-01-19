@@ -32,8 +32,8 @@
                                 <input type="email" class="form-control"  placeholder="Enter email"/>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"/>
+                                <label for="exampleInputPassword">Password <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password"/>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -76,12 +76,12 @@
                                 <input type="email" class="form-control"  placeholder="Enter email"/>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Новый пароль<span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"/>
+                                <label for="exampleInputPassword2">Новый пароль<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password"/>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Подтверждение пароля<span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"/>
+                                <label for="exampleInputPassword3">Подтверждение пароля<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password"/>
                             </div>
                         </div>
                         <div class="card-footer">

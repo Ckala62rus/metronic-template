@@ -20,6 +20,8 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
-        "@tinymce/tinymce-vue": "^4.0.7"
+        "@tinymce/tinymce-vue": "^4.0.7",
+        "v-tables-3": "^0.4.7",
+        "vue-sweetalert2": "^5.0.5"
     }
 }

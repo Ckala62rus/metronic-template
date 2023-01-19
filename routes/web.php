@@ -53,8 +53,18 @@ Route::middleware('auth')->group(function () {
     })->name('www');
 
     Route::get('dashboard/profile', [ProfileController::class, 'profilePage'])->name('metronic.profile');
-    Route::get('dashboard/lesson/create', [LessonController::class, 'create'])->name('metronic.lesson.create');
-    Route::post('dashboard/lesson', [LessonController::class, 'store'])->name('metronic.lesson.store');
+
+    Route::get('dashboard/lessons-pagination', [LessonController::class, 'getAllLessons'])->name('metronic.lesson.getAllLessons');
+    Route::get('dashboard/lessons', [LessonController::class, 'index'])->name('metronic.lesson.index');
+    Route::get('dashboard/lessons/create', [LessonController::class, 'create'])->name('metronic.lesson.create');
+    Route::get('dashboard/lessons/{id}/edit', [LessonController::class, 'edit'])->name('metronic.lesson.edit');
+    Route::get('dashboard/lessons/{id}', [LessonController::class, 'show'])->name('metronic.lesson.show');
+    Route::put('dashboard/lessons/{id}', [LessonController::class, 'update'])->name('metronic.lesson.update');
+    Route::delete('dashboard/lessons/{id}', [LessonController::class, 'destroy'])->name('metronic.lesson.destroy');
+    Route::post('dashboard/lessons', [LessonController::class, 'store'])->name('metronic.lesson.store');
+
+    // Get concrete lesson view
+    Route::get('dashboard/course/lessons/{id}', [LessonController::class, 'lessonView'])->name('metronic.lesson.lesson-view');
 });
 
 require __DIR__.'/auth.php';

@@ -8,6 +8,11 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import Metronic from "@/Layouts/Metronic.vue";
 
+import {ServerTable, ClientTable} from 'v-tables-3';
+
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
@@ -27,6 +32,9 @@ createInertiaApp({
         return createApp({ render: () => h(app, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
+            .use(ServerTable)
+            .use(ClientTable)
+            .use(VueSweetalert2)
             .mount(el);
     },
 });
