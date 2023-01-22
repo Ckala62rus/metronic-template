@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ProfileController extends Controller
 {
@@ -27,7 +28,8 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+//    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request): JsonResponse
     {
         $request->user()->fill($request->validated());
 
@@ -37,7 +39,8 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+//        return Redirect::route('profile.edit');
+        return response()->json([], JsonResponse::HTTP_OK);
     }
 
     /**

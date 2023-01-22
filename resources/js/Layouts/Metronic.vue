@@ -1705,6 +1705,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal modal-sticky modal-sticky-bottom-right" id="kt_chat_modal" role="dialog" data-backdrop="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -1973,6 +1974,8 @@
             </div>
         </div>
     </div>
+
+    <notifications/>
 </template>
 
 <script>

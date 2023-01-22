@@ -147,8 +147,14 @@ export default {
 
             axios.put('/dashboard/lessons/' + this.id, this.form)
                 .then(response => {
-                    console.log(response);
-                    window.location.href = '/dashboard/lessons';
+                    // window.location.href = '/dashboard/lessons';
+                    this.$notify({
+                        title: "Обновление",
+                        text: "Статья обновлена",
+                        speed: 1000,
+                        duration: 1000,
+                        type: 'success'
+                    });
                 })
                 .catch(err => {
                     let errors = err.response.data.errors
@@ -158,6 +164,13 @@ export default {
                             errorDescription: errors.hasOwnProperty('description'),
                             errorText: errors.hasOwnProperty('text'),
                         };
+                        this.$notify({
+                            title: "Обновление",
+                            text: "Ошибка обновления!",
+                            speed: 1000,
+                            duration: 1000,
+                            type: 'error'
+                        });
                     }
                 })
         },

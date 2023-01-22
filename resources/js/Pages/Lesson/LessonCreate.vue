@@ -22,7 +22,7 @@
                                 <div class="alert alert-custom alert-default" role="alert">
                                     <div class="alert-icon"><i class="flaticon-warning text-primary"></i></div>
                                     <div class="alert-text">
-                                        Сдесь вы можете создавать статьи для обучения
+                                        Здесь вы можете создавать статьи для обучения
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@ export default {
 
             axios.post('/dashboard/lessons', this.form)
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     window.location.href = '/dashboard/lessons'
                 })
                 .catch(err => {
@@ -147,6 +147,13 @@ export default {
                             errorDescription: errors.hasOwnProperty('description'),
                             errorText: errors.hasOwnProperty('text'),
                         };
+                        this.$notify({
+                            title: "Создание статьи",
+                            text: "Заполните обязательные поля!",
+                            speed: 1000,
+                            duration: 1000,
+                            type: 'error'
+                        });
                     }
                 })
         },

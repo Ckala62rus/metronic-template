@@ -113,11 +113,11 @@ class LessonController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param LessonStoreRequest $request
      * @param $id
      * @return JsonResponse
      */
-    public function update(Request $request, $id): JsonResponse
+    public function update(LessonStoreRequest $request, $id): JsonResponse
     {
         $lesson = $this
             ->lessonService
