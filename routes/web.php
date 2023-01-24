@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -54,6 +55,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('dashboard/profile', [ProfileController::class, 'profilePage'])->name('metronic.profile');
 
+    // Lesson begin
     Route::get('dashboard/lessons-pagination', [LessonController::class, 'getAllLessons'])->name('metronic.lesson.getAllLessons');
     Route::get('dashboard/lessons', [LessonController::class, 'index'])->name('metronic.lesson.index');
     Route::get('dashboard/lessons/create', [LessonController::class, 'create'])->name('metronic.lesson.create');
@@ -65,6 +67,11 @@ Route::middleware('auth')->group(function () {
 
     // Get concrete lesson view
     Route::get('dashboard/course/lessons/{id}', [LessonController::class, 'lessonView'])->name('metronic.lesson.lesson-view');
+
+    // User
+    Route::get('dashboard/user', [UserController::class, 'index'])->name('metronic.user.index');
+    Route::get('dashboard/user/create', [UserController::class, 'create'])->name('metronic.user.create');
+    Route::get('dashboard/user/paginate', [UserController::class, 'getAllUsersWithPaginate']);
 });
 
 require __DIR__.'/auth.php';
