@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
@@ -14,7 +15,8 @@ use Tests\TestCase;
 class UserServiceTest extends TestCase
 {
 //    use RefreshDatabase;
-    use DatabaseMigrations;
+//    use DatabaseMigrations;
+    use DatabaseTransactions;
 
     /**
      * A basic feature test example.
