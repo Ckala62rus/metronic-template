@@ -30,7 +30,7 @@
                     </div>
 
                     <!--begin::Form-->
-                    <form @submit.prevent="createUser">
+                    <form @submit.prevent="updateUser">
                         <div class="card-body">
                             <div class="form-group mb-8">
                             </div>
@@ -57,31 +57,6 @@
                                 />
                                 <div class="invalid-feedback">{{errors.errorEmailText}}</div>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Password <span class="text-danger">*</span></label>
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    id="exampleInputPassword1"
-                                    placeholder="Your email address"
-                                    v-model="form_profile.password"
-                                    :class="{'is-invalid': errors.errorPassword}"
-                                />
-                                <div class="invalid-feedback">{{errors.errorPasswordText}}</div>
-                                <div class="invalid-feedback">{{errors.errorPasswordConfirmation}}</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword2">Password confirmation<span class="text-danger">*</span></label>
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    id="exampleInputPassword2"
-                                    placeholder="Your email address"
-                                    v-model="form_profile.password_confirmation"
-                                    :class="{'is-invalid': errors.errorPassword}"
-                                />
-                                <div class="invalid-feedback">{{errors.errorPasswordConfirmation}}</div>
-                            </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-success mr-2">Создать</button>
@@ -100,10 +75,17 @@
 import {Link, usePage} from "@inertiajs/inertia-vue3";
 
 export default {
-    name: "Profile",
+    name: "UserEdit",
 
     components: {
         Link
+    },
+
+    props: {
+        id: {
+            type: Number,
+            required: true,
+        },
     },
 
     data() {
@@ -117,74 +99,49 @@ export default {
             errors: {
                 errorName: false,
                 errorEmail: false,
-                errorPassword: false,
-                errorPasswordConfirmation: false,
-                errorPasswordText: '',
                 errorEmailText: ''
             },
         }
     },
 
     methods: {
-       createUser(){
-           this.resetErrors()
-
-           axios.post('/dashboard/user', this.form_profile)
+       updateUser(){
+           axios.put('/dashboard/user/' + this.id, this.form_profile)
                .then(res => {
-                   if (res.status === 201){
-                       this.$notify({
-                           title: "Создание пользователя",
-                           text: "Пользователь создан!",
-                           speed: 1000,
-                           duration: 1000,
-                           type: 'success'
-                       });
-
-                       this.resetForm();
-                   }
+                   // if (res.status === 201){
+                   //     this.$notify({
+                   //         title: "Создание пользователя",
+                   //         text: "Пользователь создан!",
+                   //         speed: 1000,
+                   //         duration: 1000,
+                   //         type: 'success'
+                   //     });
+                   // }
+                   console.log(res)
                })
                .catch(err => {
-                   let errors = err.response.data.errors
-
-                   if (err.response.status === 422) {
-                       console.log(errors)
-                       this.errors = {
-                           errorName: errors.hasOwnProperty('name'),
-                           errorEmail: errors.hasOwnProperty('email'),
-                           errorPassword: errors.hasOwnProperty('password'),
-                           errorPasswordConfirmation: errors.hasOwnProperty('password') ? errors.password[0] : '',
-                           errorEmailText: errors.hasOwnProperty('email') ? errors.email[0] : ''
-                       };
-                       this.$notify({
-                           title: "Ошибка",
-                           text: "Ошибка в заполнении полей",
-                           speed: 1000,
-                           duration: 1000,
-                           type: 'error'
-                       });
-                   }
+                   console.log(err)
                })
        },
 
-       resetForm(){
-           this.form_profile = {
-               name: '',
-               email: '',
-               password: '',
-               password_confirmation: '',
-           };
-       },
-
-        resetErrors(){
-            this.errors = {
-                errorName: false,
-                errorEmail: false,
-                errorPassword: false,
-                errorEmailText: '',
-                errorPasswordConfirmation: ''
-            };
-        },
+        getUser(){
+           axios.get('/dashboard/user/' + this.id)
+               .then(response => {
+                   let user = response.data.data.user;
+                   this.form_profile = {
+                       name: user.name,
+                       email: user.email
+                   };
+               })
+               .catch(error => {
+                   console.log(error)
+               })
+        }
     },
+
+    mounted() {
+        this.getUser()
+    }
 }
 </script>
 

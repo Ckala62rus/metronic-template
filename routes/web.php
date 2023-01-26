@@ -70,8 +70,13 @@ Route::middleware('auth')->group(function () {
 
     // User
     Route::get('dashboard/user', [UserController::class, 'index'])->name('metronic.user.index');
-    Route::get('dashboard/user/create', [UserController::class, 'create'])->name('metronic.user.create');
     Route::get('dashboard/user/paginate', [UserController::class, 'getAllUsersWithPaginate']);
+    Route::post('dashboard/user', [UserController::class, 'store']);
+    Route::get('dashboard/user/create', [UserController::class, 'create'])->name('metronic.user.create');
+    Route::get('dashboard/user/{id}', [UserController::class, 'show']);
+    Route::put('dashboard/user/{id}', [UserController::class, 'update'])->name('metronic.user.update');
+    Route::get('dashboard/user/{id}/edit', [UserController::class, 'edit'])->name('metronic.user.edit');
+    Route::delete('dashboard/user/{id}', [UserController::class, 'destroy']);
 });
 
 require __DIR__.'/auth.php';

@@ -65,16 +65,16 @@ class UserController extends BaseController
             ->getUserById($id);
 
         return $this->response(
-            [$user],
+            ['user' => $user],
             'Get user by id:' . $id,
             true,
             Response::HTTP_OK
         );
     }
 
-    public function edit($id)
+    public function edit(int $id)
     {
-        //
+        return Inertia::render('User/UserEdit', ['id' => $id]);
     }
 
     /**

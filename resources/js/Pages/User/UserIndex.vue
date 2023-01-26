@@ -23,25 +23,12 @@
                             :url="url"
                             :columns="columns"
                             :options="options"
-                            ref="lessons-table"
+                            ref="user-table"
                         >
 
                             <template v-slot:actions="{row}">
-                                <Link :href="route('metronic.lesson.lesson-view', {id: row.id})" method="get">
-                                    <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2020-10-29-133027/theme/html/demo1/dist/../src/media/svg/icons/Home/Trash.svg-->
-                                            <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-06-223557/theme/html/demo1/dist/../src/media/svg/icons/General/Visible.svg-->
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24"/>
-                                                        <path d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
-                                                        <path d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z" fill="#000000" opacity="0.3"/>
-                                                    </g>
-                                                </svg><!--end::Svg Icon-->
-                                            </span>
-                                      </span>
-                                </Link>
 
-                                <Link :href="route('metronic.lesson.edit', {id: row.id})" method="get">
+                                <Link :href="route('metronic.user.edit', {id: row.id})" method="get">
                                     <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -126,8 +113,8 @@ export default {
 
         deleteLesson(row) {
             Swal.fire({
-                title: 'Удалить статью?',
-                text: "Выбранная статья будет удалена",
+                title: 'Удалить пользователя?',
+                text: "Выбранный пользователь будет удален",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -136,19 +123,19 @@ export default {
                 cancelButtonText: 'Отмена',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.delete('/123213213dashboard/lessons/' + row.id).then(response => {
-                        // this.$notify({
-                        //     group: 'foo',
-                        //     type: 'success',
-                        //     title: 'даление пользователя',
-                        //     text: 'Пользователь успешно удален'
-                        // });
+                    axios.delete('/dashboard/user/' + row.id).then(response => {
+                        this.$notify({
+                            group: 'foo',
+                            type: 'success',
+                            title: 'Удаление пользователя',
+                            text: 'Пользователь успешно удален'
+                        });
                         Swal.fire(
                             'Удалено!',
-                            'Статья удалена',
+                            'Пользователь удален',
                             'success'
                         )
-                        this.$refs['lessons-table'].refresh();
+                        this.$refs['user-table'].refresh();
                     });
                 }
             })

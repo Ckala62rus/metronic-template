@@ -7,6 +7,7 @@ use App\Contracts\UserServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Hash;
 
 class UserService implements UserServiceInterface
 {
@@ -35,6 +36,9 @@ class UserService implements UserServiceInterface
 
     public function createUser(array $data): Model
     {
+        if(isset($data['password'])){
+            $data['password'] = Hash::make($data['password']);
+        }
         return $this->userRepository->createUser($data);
     }
 
