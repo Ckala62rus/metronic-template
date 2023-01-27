@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use function PHPUnit\Framework\isEmpty;
 
 class RoleService implements RoleServiceInterface
 {
@@ -65,5 +64,10 @@ class RoleService implements RoleServiceInterface
     public function deleteRole(int $id): bool
     {
         return $this->roleRepository->deleteRole($id);
+    }
+
+    public function getAllPermissionsCollection(): Collection
+    {
+        return Permission::all();
     }
 }

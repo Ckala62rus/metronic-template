@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Redirect;
@@ -77,6 +78,16 @@ Route::middleware('auth')->group(function () {
     Route::put('dashboard/user/{id}', [UserController::class, 'update'])->name('metronic.user.update');
     Route::get('dashboard/user/{id}/edit', [UserController::class, 'edit'])->name('metronic.user.edit');
     Route::delete('dashboard/user/{id}', [UserController::class, 'destroy']);
+
+    // Role
+    Route::get('dashboard/role', [RolePermissionController::class, 'index'])->name('metronic.role.index');
+    Route::get('dashboard/role/paginate', [RolePermissionController::class, 'getAllUsersWithPaginate']);
+    Route::get('dashboard/role/create', [RolePermissionController::class, 'create'])->name('metronic.role.create');
+    Route::post('dashboard/role', [RolePermissionController::class, 'store']);
+//    Route::get('dashboard/role/{id}/edit', [RolePermissionController::class, 'edit'])->name('metronic.role.edit');
+
+    // Permission
+    Route::get('dashboard/permission', [RolePermissionController::class, 'getPermissions']);
 });
 
 require __DIR__.'/auth.php';
