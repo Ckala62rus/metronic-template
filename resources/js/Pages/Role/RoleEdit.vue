@@ -6,7 +6,7 @@
                 <div class="card card-custom rdp_statistic_mg">
                     <div class="card-header">
                         <h3 class="card-title">
-                            Создание роли
+                            Редактирование роли
                         </h3>
                         <div class="card-toolbar">
                             <div class="example-tools justify-content-center">
@@ -27,9 +27,9 @@
                                     class="form-control"
                                     placeholder="Your name"
                                     v-model="form.role.name"
-                                    :class="{'is-invalid': errors.roleName}"
+                                    :class="{'is-invalid': errors.errorName}"
                                 />
-                                <div class="invalid-feedback">Название роли обязательно!</div>
+                                <div class="invalid-feedback">Название обязательно!</div>
                             </div>
 
                             <div class="form-group row" v-for="permission in permissions.lesson">
@@ -68,6 +68,13 @@ export default {
         Link
     },
 
+    props: {
+        id: {
+            type: Number,
+            required: true,
+        },
+    },
+
     data() {
         return {
             form: {
@@ -76,47 +83,28 @@ export default {
                 },
                 permissions: []
             },
-            errors: {
-                roleName : false,
-                roleNameError : '',
-            },
+            errors: {},
             permissions: {},
         }
     },
 
     methods: {
        createRole(){
-           this.resetErrors()
-
-           axios.post('/dashboard/role', this.form)
+           axios.put(`/dashboard/role/${this.id}`, this.form)
                .then(res => {
-                   if (res.status === 201){
+                   if (res.status === 200){
                        this.$notify({
-                           title: "Создание роли",
-                           text: "Роль создана!",
+                           title: "Обновление роли",
+                           text: "Роль обновлена!",
                            speed: 1000,
-                           duration: 1000,
+                           duration: 4000,
                            type: 'success'
                        });
-                       this.$inertia.visit('/dashboard/role')
                    }
+                   this.$inertia.visit('/dashboard/role')
                })
                .catch(err => {
-                       let errors = err.response.data.errors
-
-                       if (err.response.status === 422) {
-                           this.errors = {
-                               roleName: !!errors['role.name'],
-                               roleNameError: errors['role.name'].length > 0 ? errors['role.name'][0] : '',
-                           }
-                           this.$notify({
-                               title: "Ошибка",
-                               text: "Заполните название роли",
-                               speed: 1000,
-                               duration: 1000,
-                               type: 'error'
-                           });
-                       }
+                   console.log(err)
                })
        },
 
@@ -127,17 +115,20 @@ export default {
                })
         },
 
-        resetErrors(){
-            this.errors = {
-                roleName: false,
-                roleNameError: ''
-            };
+        getRoleById(){
+           axios.get(`/dashboard/role/${this.id}`)
+               .then(responce => {
+                   let role = responce.data.data.role;
+                   this.form.role.name = role.name;
+                   this.form.permissions = role.permissions;
+               })
         },
 
     },
 
     mounted() {
         this.getPermissions();
+        this.getRoleById();
     }
 }
 </script>

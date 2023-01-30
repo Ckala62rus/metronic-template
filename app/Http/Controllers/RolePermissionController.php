@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contracts\RoleServiceInterface;
 use App\Http\Requests\Admin\Dashboard\Role\RoleCreateRequest;
+use App\Http\Resources\Admin\Dashboard\Role\AllRolesResource;
+use App\Http\Resources\Admin\Dashboard\Role\RoleByIdResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
@@ -66,7 +68,7 @@ class RolePermissionController extends BaseController
 
         return $this->response(
             [
-                'role' => $role,
+                'role' => RoleByIdResource::make($role),
             ],
             'Get role',
             true,
@@ -133,7 +135,7 @@ class RolePermissionController extends BaseController
             ->getAllRolesWithPagination($data['limit']);
 
         return response()->json([
-            'data' => $users->collect(),
+            'data' => AllRolesResource::collection($users),
             'count' => $users->total()
         ]);
     }
@@ -146,7 +148,7 @@ class RolePermissionController extends BaseController
         return $this->response(
             [
                 'permissions' => [
-                    'lesson' => Permission::where('name', 'like', 'www')->get(),
+                    'lesson' => Permission::where('name', 'like', '%lesson')->get(),
                     'user' => '',
                 ],
             ],

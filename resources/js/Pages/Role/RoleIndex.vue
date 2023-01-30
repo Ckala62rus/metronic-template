@@ -23,12 +23,12 @@
                             :url="url"
                             :columns="columns"
                             :options="options"
-                            ref="user-table"
+                            ref="role-table"
                         >
 
                             <template v-slot:actions="{row}">
 
-                                <Link :href="route('metronic.user.edit', {id: row.id})" method="get">
+                                <Link :href="route('metronic.role.edit', {id: row.id})" method="get">
                                     <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -40,7 +40,7 @@
                                     </span>
                                 </Link>
 
-                                <a href="javascript:;" @click="deleteLesson(row)">
+                                <a href="javascript:;" @click="deleteRole(row)">
                                       <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2020-10-29-133027/theme/html/demo1/dist/../src/media/svg/icons/Home/Trash.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -75,7 +75,6 @@ export default {
             columns: [
                 'id',
                 'name',
-                'email',
                 'created_at',
                 'updated_at',
                 'actions'
@@ -86,7 +85,6 @@ export default {
                 headings: {
                     id: 'id',
                     name: 'Имя',
-                    email: 'Почта',
                     created_at: 'Время создания',
                     updated_at: 'Время обновления',
                     actions: 'Действия',
@@ -111,10 +109,10 @@ export default {
             console.log(row);
         },
 
-        deleteLesson(row) {
+        deleteRole(row) {
             Swal.fire({
-                title: 'Удалить пользователя?',
-                text: "Выбранный пользователь будет удален",
+                title: 'Удалить роль?',
+                text: "Выбранная роль будет удалена",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -123,24 +121,23 @@ export default {
                 cancelButtonText: 'Отмена',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.delete('/2222dashboard/user/' + row.id).then(response => {
+                    axios.delete(`/dashboard/role/${row.id}`).then(response => {
                         this.$notify({
                             group: 'foo',
                             type: 'success',
-                            title: 'Удаление пользователя',
-                            text: 'Пользователь успешно удален'
+                            title: 'Удаление роли',
+                            text: 'Роль успешно удалена'
                         });
                         Swal.fire(
                             'Удалено!',
-                            'Пользователь удален',
+                            'Роль удалена',
                             'success'
                         )
-                        this.$refs['user-table'].refresh();
+                        this.$refs['role-table'].refresh();
                     });
                 }
             })
         },
-
     },
 
     mounted() {
