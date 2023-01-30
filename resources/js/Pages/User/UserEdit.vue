@@ -25,7 +25,7 @@
                 <div class="card card-custom height-profile">
                     <div class="card-header">
                         <h3 class="card-title">
-                            Создание пользователя
+                            Редактирование пользователя
                         </h3>
                     </div>
 
@@ -101,6 +101,7 @@ export default {
                 errorEmail: false,
                 errorEmailText: ''
             },
+            roles: {},
         }
     },
 
@@ -108,15 +109,15 @@ export default {
        updateUser(){
            axios.put('/dashboard/user/' + this.id, this.form_profile)
                .then(res => {
-                   // if (res.status === 201){
-                   //     this.$notify({
-                   //         title: "Создание пользователя",
-                   //         text: "Пользователь создан!",
-                   //         speed: 1000,
-                   //         duration: 1000,
-                   //         type: 'success'
-                   //     });
-                   // }
+                   if (res.status === 200){
+                       this.$notify({
+                           title: "Редактирование пользователя",
+                           text: "Данные отредактированны!",
+                           speed: 1000,
+                           duration: 1000,
+                           type: 'success'
+                       });
+                   }
                    console.log(res)
                })
                .catch(err => {
@@ -136,11 +137,19 @@ export default {
                .catch(error => {
                    console.log(error)
                })
-        }
+        },
+
+        getRoles(){
+           axios.get('/dashboard/role/all')
+               .then(response => {
+                   console.log(response.data.data.roles);
+               })
+        },
     },
 
     mounted() {
         this.getUser()
+        this.getRoles()
     }
 }
 </script>

@@ -49,6 +49,12 @@ class UserService implements UserServiceInterface
 
     public function updateUser(int $id, array $data): ?Model
     {
+        $user = $this->userRepository->getUserById($id);
+
+        if (isset($data['role_id'])){
+            $user->syncRoles($data['role_id']);
+        }
+
         return $this->userRepository->updateUser($id, $data);
     }
 

@@ -84,6 +84,7 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboard/role/paginate', [RolePermissionController::class, 'getAllUsersWithPaginate']);
     Route::get('dashboard/role/create', [RolePermissionController::class, 'create'])->name('metronic.role.create');
     Route::post('dashboard/role', [RolePermissionController::class, 'store']);
+    Route::get('dashboard/role/all', [RolePermissionController::class, 'getRolesCollection']);
     Route::get('dashboard/role/{id}', [RolePermissionController::class, 'show']);
     Route::put('dashboard/role/{id}', [RolePermissionController::class, 'update']);
     Route::get('dashboard/role/{id}/edit', [RolePermissionController::class, 'edit'])->name('metronic.role.edit');

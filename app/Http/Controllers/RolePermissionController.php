@@ -130,13 +130,13 @@ class RolePermissionController extends BaseController
     {
         $data = $request->all();
 
-        $users = $this
+        $roles = $this
             ->roleService
             ->getAllRolesWithPagination($data['limit']);
 
         return response()->json([
-            'data' => AllRolesResource::collection($users),
-            'count' => $users->total()
+            'data' => AllRolesResource::collection($roles),
+            'count' => $roles->total()
         ]);
     }
 
@@ -153,6 +153,23 @@ class RolePermissionController extends BaseController
                 ],
             ],
             'All permissions',
+            true,
+            Response::HTTP_OK
+        );
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getRolesCollection(): JsonResponse
+    {
+        $roles = $this->roleService->getAllRolesCollection();
+
+        return $this->response(
+            [
+                'roles' => AllRolesResource::collection($roles),
+            ],
+            'Get all roles collection',
             true,
             Response::HTTP_OK
         );

@@ -65,7 +65,10 @@ class UserController extends BaseController
             ->getUserById($id);
 
         return $this->response(
-            ['user' => $user],
+            [
+                'user' => $user,
+                'role' => $user->roles
+            ],
             'Get user by id:' . $id,
             true,
             Response::HTTP_OK

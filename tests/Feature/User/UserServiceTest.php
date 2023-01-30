@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class UserServiceTest extends TestCase
@@ -153,6 +154,29 @@ class UserServiceTest extends TestCase
         $user = $userService->updateUser($userCreated->id, [
             'name' => 'updatedName',
             'email' => 'newEmail@mail.ru',
+        ]);
+
+        // assert
+        $this->assertNotEquals($userCreated->name, $user->name);
+        $this->assertNotEquals($userCreated->email, $user->email);
+    }
+
+    public function test_update_user_with_role()
+    {
+        // arrange
+        $userCreated = User::factory()->create();
+        $roleCreated = Role::create(['name' => 'Manager', 'guard_name' => 'web']);
+
+        /** @var  UserService  $userService */
+        $userService = $this
+            ->app
+            ->make(UserService::class);
+
+        // act
+        $user = $userService->updateUser($userCreated->id, [
+            'name' => 'updatedName',
+            'email' => 'newEmail@mail.ru',
+            'role_id' => $roleCreated->id
         ]);
 
         // assert
