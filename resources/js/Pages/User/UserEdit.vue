@@ -2,6 +2,7 @@
     <div class="container">
 
         <div class="row">
+
             <div class="col-md-12 mt-5 mb-5">
                 <div class="alert alert-custom alert-white alert-shadow fade show gutter-b" role="alert">
                     <div class="alert-icon">
@@ -29,13 +30,12 @@
                         </h3>
                     </div>
 
-                    <!--begin::Form-->
                     <form @submit.prevent="updateUser">
                         <div class="card-body">
                             <div class="form-group mb-8">
                             </div>
                             <div class="form-group">
-                                <label>Name <span class="text-danger">*</span></label>
+                                <label>Имя <span class="text-danger">*</span></label>
                                 <input
                                     type="text"
                                     class="form-control"
@@ -56,6 +56,18 @@
                                     :class="{'is-invalid': errors.errorEmail}"
                                 />
                                 <div class="invalid-feedback">{{errors.errorEmailText}}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Роль<span class="text-danger">*</span></label>
+                                <el-select v-model="form_profile.role_id" class="w-100" placeholder="Select" size="large">
+                                    <el-option
+                                        v-for="item in roles"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id"
+                                    />
+                                </el-select>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -94,7 +106,8 @@ export default {
                 name: '',
                 email: '',
                 password: '',
-                password_confirmation: ''
+                password_confirmation: '',
+                role_id: null
             },
             errors: {
                 errorName: false,
@@ -102,6 +115,7 @@ export default {
                 errorEmailText: ''
             },
             roles: {},
+            options: [],
         }
     },
 
@@ -128,10 +142,12 @@ export default {
         getUser(){
            axios.get('/dashboard/user/' + this.id)
                .then(response => {
+                   let role_id = response.data.data.role.length > 0 ? response.data.data.role[0].id : null
                    let user = response.data.data.user;
                    this.form_profile = {
                        name: user.name,
-                       email: user.email
+                       email: user.email,
+                       role_id: role_id,
                    };
                })
                .catch(error => {
@@ -142,7 +158,7 @@ export default {
         getRoles(){
            axios.get('/dashboard/role/all')
                .then(response => {
-                   console.log(response.data.data.roles);
+                   this.roles = response.data.data.roles
                })
         },
     },

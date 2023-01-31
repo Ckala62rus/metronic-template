@@ -56,39 +56,75 @@ Route::middleware('auth')->group(function () {
 
     Route::get('dashboard/profile', [ProfileController::class, 'profilePage'])->name('metronic.profile');
 
-    // Lesson begin
-    Route::get('dashboard/lessons-pagination', [LessonController::class, 'getAllLessons'])->name('metronic.lesson.getAllLessons');
-    Route::get('dashboard/lessons', [LessonController::class, 'index'])->name('metronic.lesson.index');
-    Route::get('dashboard/lessons/create', [LessonController::class, 'create'])->name('metronic.lesson.create');
-    Route::get('dashboard/lessons/{id}/edit', [LessonController::class, 'edit'])->name('metronic.lesson.edit');
-    Route::get('dashboard/lessons/{id}', [LessonController::class, 'show'])->name('metronic.lesson.show');
-    Route::put('dashboard/lessons/{id}', [LessonController::class, 'update'])->name('metronic.lesson.update');
-    Route::delete('dashboard/lessons/{id}', [LessonController::class, 'destroy'])->name('metronic.lesson.destroy');
-    Route::post('dashboard/lessons', [LessonController::class, 'store'])->name('metronic.lesson.store');
+    Route::group(['prefix' => 'dashboard'], function () {
+        // Lesson begin
+        Route::get('lessons-pagination', [LessonController::class, 'getAllLessons'])->name('metronic.lesson.getAllLessons');
+        Route::get('lessons', [LessonController::class, 'index'])->name('metronic.lesson.index');
+        Route::get('lessons/create', [LessonController::class, 'create'])->name('metronic.lesson.create');
+        Route::get('lessons/{id}/edit', [LessonController::class, 'edit'])->name('metronic.lesson.edit');
+        Route::get('lessons/{id}', [LessonController::class, 'show'])->name('metronic.lesson.show');
+        Route::put('lessons/{id}', [LessonController::class, 'update'])->name('metronic.lesson.update');
+        Route::delete('dashboard/lessons/{id}', [LessonController::class, 'destroy'])->name('metronic.lesson.destroy');
+        Route::post('dashboard/lessons', [LessonController::class, 'store'])->name('metronic.lesson.store');
 
-    // Get concrete lesson view
-    Route::get('dashboard/course/lessons/{id}', [LessonController::class, 'lessonView'])->name('metronic.lesson.lesson-view');
+        // Get concrete lesson view
+        Route::get('course/lessons/{id}', [LessonController::class, 'lessonView'])->name('metronic.lesson.lesson-view');
 
-    // User
-    Route::get('dashboard/user', [UserController::class, 'index'])->name('metronic.user.index');
-    Route::get('dashboard/user/paginate', [UserController::class, 'getAllUsersWithPaginate']);
-    Route::post('dashboard/user', [UserController::class, 'store']);
-    Route::get('dashboard/user/create', [UserController::class, 'create'])->name('metronic.user.create');
-    Route::get('dashboard/user/{id}', [UserController::class, 'show']);
-    Route::put('dashboard/user/{id}', [UserController::class, 'update'])->name('metronic.user.update');
-    Route::get('dashboard/user/{id}/edit', [UserController::class, 'edit'])->name('metronic.user.edit');
-    Route::delete('dashboard/user/{id}', [UserController::class, 'destroy']);
+        // User
+        Route::get('user', [UserController::class, 'index'])->name('metronic.user.index')->middleware(['permission:read user']);
+        Route::get('user/paginate', [UserController::class, 'getAllUsersWithPaginate']);
+        Route::post('user', [UserController::class, 'store'])->middleware(['permission:create user']);
+        Route::get('user/create', [UserController::class, 'create'])->name('metronic.user.create')->middleware(['permission:create user']);
+        Route::get('user/{id}', [UserController::class, 'show'])->middleware(['permission:read user']);
+        Route::put('user/{id}', [UserController::class, 'update'])->name('metronic.user.update')->middleware(['permission:update user']);
+        Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('metronic.user.edit')->middleware(['permission:update user']);
+        Route::delete('user/{id}', [UserController::class, 'destroy'])->middleware(['permission:delete user']);
 
-    // Role
-    Route::get('dashboard/role', [RolePermissionController::class, 'index'])->name('metronic.role.index');
-    Route::get('dashboard/role/paginate', [RolePermissionController::class, 'getAllUsersWithPaginate']);
-    Route::get('dashboard/role/create', [RolePermissionController::class, 'create'])->name('metronic.role.create');
-    Route::post('dashboard/role', [RolePermissionController::class, 'store']);
-    Route::get('dashboard/role/all', [RolePermissionController::class, 'getRolesCollection']);
-    Route::get('dashboard/role/{id}', [RolePermissionController::class, 'show']);
-    Route::put('dashboard/role/{id}', [RolePermissionController::class, 'update']);
-    Route::get('dashboard/role/{id}/edit', [RolePermissionController::class, 'edit'])->name('metronic.role.edit');
-    Route::delete('dashboard/role/{id}', [RolePermissionController::class, 'destroy']);
+        // Role
+        Route::get('role', [RolePermissionController::class, 'index'])->name('metronic.role.index');
+        Route::get('role/paginate', [RolePermissionController::class, 'getAllUsersWithPaginate']);
+        Route::get('role/create', [RolePermissionController::class, 'create'])->name('metronic.role.create');
+        Route::post('role', [RolePermissionController::class, 'store']);
+        Route::get('role/all', [RolePermissionController::class, 'getRolesCollection']);
+        Route::get('role/{id}', [RolePermissionController::class, 'show']);
+        Route::put('role/{id}', [RolePermissionController::class, 'update']);
+        Route::get('role/{id}/edit', [RolePermissionController::class, 'edit'])->name('metronic.role.edit');
+        Route::delete('role/{id}', [RolePermissionController::class, 'destroy']);
+    });
+
+//    // Lesson begin
+//    Route::get('dashboard/lessons-pagination', [LessonController::class, 'getAllLessons'])->name('metronic.lesson.getAllLessons');
+//    Route::get('dashboard/lessons', [LessonController::class, 'index'])->name('metronic.lesson.index');
+//    Route::get('dashboard/lessons/create', [LessonController::class, 'create'])->name('metronic.lesson.create');
+//    Route::get('dashboard/lessons/{id}/edit', [LessonController::class, 'edit'])->name('metronic.lesson.edit');
+//    Route::get('dashboard/lessons/{id}', [LessonController::class, 'show'])->name('metronic.lesson.show');
+//    Route::put('dashboard/lessons/{id}', [LessonController::class, 'update'])->name('metronic.lesson.update');
+//    Route::delete('dashboard/lessons/{id}', [LessonController::class, 'destroy'])->name('metronic.lesson.destroy');
+//    Route::post('dashboard/lessons', [LessonController::class, 'store'])->name('metronic.lesson.store');
+
+//    // Get concrete lesson view
+//    Route::get('dashboard/course/lessons/{id}', [LessonController::class, 'lessonView'])->name('metronic.lesson.lesson-view');
+//
+//    // User
+//    Route::get('dashboard/user', [UserController::class, 'index'])->name('metronic.user.index')->middleware(['permission:read user']);
+//    Route::get('dashboard/user/paginate', [UserController::class, 'getAllUsersWithPaginate']);
+//    Route::post('dashboard/user', [UserController::class, 'store'])->middleware(['permission:create user']);
+//    Route::get('dashboard/user/create', [UserController::class, 'create'])->name('metronic.user.create')->middleware(['permission:create user']);
+//    Route::get('dashboard/user/{id}', [UserController::class, 'show'])->middleware(['permission:read user']);
+//    Route::put('dashboard/user/{id}', [UserController::class, 'update'])->name('metronic.user.update')->middleware(['permission:update user']);
+//    Route::get('dashboard/user/{id}/edit', [UserController::class, 'edit'])->name('metronic.user.edit')->middleware(['permission:update user']);
+//    Route::delete('dashboard/user/{id}', [UserController::class, 'destroy'])->middleware(['permission:delete user']);
+//
+//    // Role
+//    Route::get('dashboard/role', [RolePermissionController::class, 'index'])->name('metronic.role.index');
+//    Route::get('dashboard/role/paginate', [RolePermissionController::class, 'getAllUsersWithPaginate']);
+//    Route::get('dashboard/role/create', [RolePermissionController::class, 'create'])->name('metronic.role.create');
+//    Route::post('dashboard/role', [RolePermissionController::class, 'store']);
+//    Route::get('dashboard/role/all', [RolePermissionController::class, 'getRolesCollection']);
+//    Route::get('dashboard/role/{id}', [RolePermissionController::class, 'show']);
+//    Route::put('dashboard/role/{id}', [RolePermissionController::class, 'update']);
+//    Route::get('dashboard/role/{id}/edit', [RolePermissionController::class, 'edit'])->name('metronic.role.edit');
+//    Route::delete('dashboard/role/{id}', [RolePermissionController::class, 'destroy']);
 
     // Permission
     Route::get('dashboard/permission', [RolePermissionController::class, 'getPermissions']);

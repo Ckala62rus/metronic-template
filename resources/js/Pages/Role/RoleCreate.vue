@@ -32,7 +32,21 @@
                                 <div class="invalid-feedback">Название роли обязательно!</div>
                             </div>
 
+                            <label v-if="permissions.lesson" class="col-3 col-form-label">lessons</label>
                             <div class="form-group row" v-for="permission in permissions.lesson">
+                                <label class="col-3 col-form-label">{{permission.name}}</label>
+                                <div class="col-3">
+                                    <span class="switch switch-sm">
+                                        <label>
+                                            <input type="checkbox" v-model="form.permissions" :value="permission.id"/>
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <label v-if="permissions.user" class="col-3 col-form-label">user</label>
+                            <div class="form-group row" v-for="permission in permissions.user">
                                 <label class="col-3 col-form-label">{{permission.name}}</label>
                                 <div class="col-3">
                                     <span class="switch switch-sm">

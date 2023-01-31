@@ -15,6 +15,9 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 import Notifications from '@kyvg/vue3-notification'
 
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
@@ -38,6 +41,7 @@ createInertiaApp({
             .use(ClientTable)
             .use(VueSweetalert2)
             .use(Notifications)
+            .use(ElementPlus)
             .mount(el);
     },
 });

@@ -149,7 +149,7 @@ class RolePermissionController extends BaseController
             [
                 'permissions' => [
                     'lesson' => Permission::where('name', 'like', '%lesson')->get(),
-                    'user' => '',
+                    'user' => Permission::where('name', 'like', '%user')->get(),
                 ],
             ],
             'All permissions',
