@@ -32,31 +32,41 @@
                                 <div class="invalid-feedback">Название обязательно!</div>
                             </div>
 
-                            <label v-if="permissions.lesson" class="col-3 col-form-label">Раздель пользователь</label>
-                            <div class="form-group row" v-for="permission in permissions.lesson">
-                                <label class="col-3 col-form-label">{{permission.name}}</label>
-                                <div class="col-3">
-                                    <span class="switch switch-sm">
-                                        <label>
-                                            <input type="checkbox" v-model="form.permissions" :value="permission.id"/>
-                                            <span></span>
-                                        </label>
-                                    </span>
-                                </div>
-                            </div>
+                            <el-radio-group v-model="tabPosition" style="margin-bottom: 30px">
+                                <el-radio-button label="top">top</el-radio-button>
+                                <el-radio-button label="right">right</el-radio-button>
+                                <el-radio-button label="bottom">bottom</el-radio-button>
+                                <el-radio-button label="left">left</el-radio-button>
+                            </el-radio-group>
 
-                            <label v-if="permissions.user" class="col-3 col-form-label">Раздель пользователь</label>
-                            <div class="form-group row" v-for="permission in permissions.user">
-                                <label class="col-3 col-form-label">{{permission.name}}</label>
-                                <div class="col-3">
+                            <el-tabs :tab-position="tabPosition"  class="demo-tabs">
+                                <el-tab-pane label="User">
+                                    <div class="form-group row" v-for="permission in permissions.user">
+                                        <label class="col-3 col-form-label">{{permission.name}}</label>
+                                        <div class="col-3">
                                     <span class="switch switch-sm">
                                         <label>
                                             <input type="checkbox" v-model="form.permissions" :value="permission.id"/>
                                             <span></span>
                                         </label>
                                     </span>
-                                </div>
-                            </div>
+                                        </div>
+                                    </div>
+                                </el-tab-pane>
+                                <el-tab-pane label="Lesson">
+                                    <div class="form-group row" v-for="permission in permissions.lesson">
+                                        <label class="col-3 col-form-label">{{permission.name}}</label>
+                                        <div class="col-3">
+                                    <span class="switch switch-sm">
+                                        <label>
+                                            <input type="checkbox" v-model="form.permissions" :value="permission.id"/>
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                        </div>
+                                    </div>
+                                </el-tab-pane>
+                            </el-tabs>
                         </div>
 
                         <div class="card-footer">
@@ -99,6 +109,7 @@ export default {
             },
             errors: {},
             permissions: {},
+            tabPosition: 'left',
         }
     },
 
@@ -149,6 +160,17 @@ export default {
 
 <style scoped>
     .height-profile {
+        height: 100%;
+    }
+    .demo-tabs > .el-tabs__content {
+        padding: 32px;
+        color: #6b778c;
+        font-size: 32px;
+        font-weight: 600;
+    }
+
+    .el-tabs--right .el-tabs__content,
+    .el-tabs--left .el-tabs__content {
         height: 100%;
     }
 </style>
