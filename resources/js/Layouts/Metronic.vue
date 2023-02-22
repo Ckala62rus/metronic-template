@@ -1113,7 +1113,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="topbar-item">
+                        <div class="topbar-item" @click="menuToogle">
                             <div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2"
                                  id="kt_quick_user_toggle">
                                 <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
@@ -1990,6 +1990,21 @@ export default {
         Sidebar,
         Footer,
         UserMenu
+    },
+
+    methods: {
+        menuToogle(){
+            let menu = document.getElementById('kt_quick_user');
+            menu.classList.add('offcanvas-on');
+        },
+    },
+
+    mounted() {
+        let closeButtonMenu = document.getElementById('kt_quick_user_close');
+        closeButtonMenu.addEventListener('click', () => {
+            let menu = document.getElementById('kt_quick_user');
+            menu.classList.remove('offcanvas-on');
+        })
     },
 }
 </script>
