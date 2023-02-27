@@ -4,7 +4,7 @@
 
         <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
             <h3 class="font-weight-bold m-0">
-                User Profile
+                Мой профиль
                 <small class="text-muted font-size-sm ml-2">12 messages</small>
             </h3>
             <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
@@ -16,12 +16,15 @@
 
             <div class="d-flex align-items-center mt-5">
                 <div class="symbol symbol-100 mr-5">
-                    <div class="symbol-label" style="background-image: url('/template/media/users/300_21.jpg')"></div>
+<!--                    <div class="symbol-label" style="background-image: url('/template/media/users/300_21.jpg')"></div>-->
+<!--                    <div class="symbol-label" style="background-image: url('http://127.0.0.1:8000/storage/media/1/sf.jpg')"></div>-->
+                    <div class="symbol-label avatar-change" @click="changeAvatar" :style="'background-image: url(' + avatarUrl + ')'"></div>
+                    <input class="avatar-input" @change="setAvatar($event)" type="file" hidden/>
                     <i class="symbol-badge bg-success"></i>
                 </div>
                 <div class="d-flex flex-column">
                     <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">
-                        James Jones
+                        {{user.name}}
                     </a>
                     <div class="text-muted mt-1">
                         Application Developer
@@ -41,14 +44,14 @@
                                         </g>
                                     </svg><!--end::Svg Icon--></span>
                                 </span>
-                            <span class="navi-text text-muted text-hover-primary">jm@softplus.com</span>
+                            <span class="navi-text text-muted text-hover-primary">{{ user.email }}</span>
                         </span>
                         </a>
 
                         <div class="">
                         <span
-                            class="label label-danger label-inline mr-2"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                            class="label label-danger label-inline mr-2 logout-button"
+                            @click="logout"
                         >
                             Выйти
                         </span>
@@ -68,10 +71,73 @@
 
 <script>
 export default {
-    name: "UserMenu"
+    name: "UserMenu",
+
+    data(){
+        return {
+            avatarUrl: '/template/media/users/300_21.jpg', // default avatar
+            file: null,
+            user: null,
+        }
+    },
+
+    methods: {
+        getAvatar(){
+            axios.get('/avatar/get')
+                .then(res => {
+                    this.avatarUrl = res.data.data.url;
+                })
+        },
+
+        changeAvatar(){
+            let inputUploadAvatar = document.querySelector('.avatar-input');
+            inputUploadAvatar.click();
+        },
+
+        setAvatar(event){
+            this.file = event.target.files[0];
+            let formData = new FormData();
+            formData.append('avatar', this.file);
+
+            axios.post( '/avatar/set',
+                formData,
+         {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then(res => {
+                this.avatarUrl = res.data.data.url;
+            })
+        },
+
+        logout(){
+            axios.post('/logout').then(res => {
+                if (res.status === 200) {
+                    window.location.href = '/login'
+                }
+            })
+        },
+    },
+
+    created() {
+        this.user = this.$page.props.auth.user;
+    },
+
+    mounted() {
+        this.getAvatar();
+    }
 }
 </script>
 
 <style scoped>
-
+.logout-button{
+    cursor: pointer;
+}
+.logout-button:hover{
+    background-color: #00a500;
+}
+.avatar-change:hover {
+    cursor: pointer;
+}
 </style>

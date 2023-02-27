@@ -6,7 +6,9 @@ use App\Contracts\UserServiceInterface;
 use App\Http\Requests\Admin\Dashboard\User\UserCreateRequest;
 use App\Http\Requests\Admin\Dashboard\User\UserUpdateRequest;
 use App\Http\Resources\Admin\Dashboard\User\UserPaginateResource;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -129,5 +131,60 @@ class UserController extends BaseController
             'data' => UserPaginateResource::collection($users),
             'count' => $users->total()
         ]);
+    }
+
+    /**
+     * Upload image for user avatar
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function setAvatar(Request $request): JsonResponse
+    {
+        $avatar = $request->all()['avatar'];
+
+        $user = Auth::user();
+
+        $uniqueFileName = md5($avatar->getClientOriginalName(). time());
+
+        // clear old avatar
+        $user->clearMediaCollection('avatar');
+
+        // set new avatar
+        $user
+            ->addMedia($avatar)
+            ->usingName($uniqueFileName)
+            ->toMediaCollection('avatar');
+
+        $url = empty($user->getFirstMediaUrl('avatar'))
+            ? null
+            : $user->getFirstMediaUrl('avatar', 'preview');
+
+        return $this->response([
+            'url' => $url
+        ],
+        'URL of avatar',
+        true,
+        Response::HTTP_OK
+        );
+    }
+
+    /**
+     * Get url of avatar
+     * @return JsonResponse
+     */
+    public function getAvatar(): JsonResponse
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $url = empty($user->getFirstMediaUrl('avatar')) ? null : $user->getFirstMediaUrl('avatar', 'preview');
+
+        return $this->response([
+            'url' => $url
+        ],
+            'URL of avatar',
+            true,
+            Response::HTTP_OK
+        );
     }
 }

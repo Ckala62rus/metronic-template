@@ -92,6 +92,10 @@ Route::middleware('auth')->group(function () {
 
     // Permission
     Route::get('dashboard/permission', [RolePermissionController::class, 'getPermissions']);
+
+    //Avatar
+    Route::post('avatar/set', [UserController::class, 'setAvatar']);
+    Route::get('avatar/get', [UserController::class, 'getAvatar']);
 });
 
 require __DIR__.'/auth.php';

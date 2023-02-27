@@ -6,6 +6,7 @@ use App\Contracts\UserRepositoryInterface;
 use App\Contracts\UserServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 
@@ -61,5 +62,11 @@ class UserService implements UserServiceInterface
     public function deleteUser(int $id): bool
     {
         return $this->userRepository->deleteUser($id);
+    }
+
+
+    public function avatar(UploadedFile $file): string
+    {
+        return '';
     }
 }

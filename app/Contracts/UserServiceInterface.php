@@ -4,6 +4,7 @@ namespace App\Contracts;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface UserServiceInterface
@@ -14,4 +15,5 @@ interface UserServiceInterface
     public function getUserById(int $id): ?Model;
     public function updateUser(int $id, array $data): ?Model;
     public function deleteUser(int $id): bool;
+    public function avatar(UploadedFile $file): string;
 }
