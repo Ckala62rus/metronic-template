@@ -67,6 +67,7 @@ class LessonCategoryService implements LessonCategoryServiceInterface
     public function deleteLessonCategory(int $id): bool
     {
         return $this
+            ->lessonCategoryRepository
             ->deleteLessonCategory($id);
     }
 

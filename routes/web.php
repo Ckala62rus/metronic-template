@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LessonCategoryController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolePermissionController;
@@ -88,6 +89,13 @@ Route::middleware('auth')->group(function () {
         Route::put('role/{id}', [RolePermissionController::class, 'update']);
         Route::get('role/{id}/edit', [RolePermissionController::class, 'edit'])->name('metronic.role.edit');
         Route::delete('role/{id}', [RolePermissionController::class, 'destroy']);
+
+        // Lesson Category
+        Route::post('category', [LessonCategoryController::class, 'store']);
+        Route::get('category/{id}', [LessonCategoryController::class, 'show']);
+        Route::put('category/{id}', [LessonCategoryController::class, 'update']);
+        Route::delete('category/{id}', [LessonCategoryController::class, 'destroy']);
+
     });
 
     // Permission
