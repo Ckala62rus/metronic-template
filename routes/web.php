@@ -91,6 +91,10 @@ Route::middleware('auth')->group(function () {
         Route::delete('role/{id}', [RolePermissionController::class, 'destroy']);
 
         // Lesson Category
+        Route::get('category', [LessonCategoryController::class, 'index'])->name('metronic.lesson-category.index');
+        Route::get('category/create', [LessonCategoryController::class, 'create'])->name('metronic.lesson-category.create');
+        Route::get('category/{id}/edit', [LessonCategoryController::class, 'edit'])->name('metronic.lesson-category.edit');
+        Route::get('category/paginate', [LessonCategoryController::class, 'getAllLessonCategoriesWithPagination']);
         Route::post('category', [LessonCategoryController::class, 'store']);
         Route::get('category/{id}', [LessonCategoryController::class, 'show']);
         Route::put('category/{id}', [LessonCategoryController::class, 'update']);

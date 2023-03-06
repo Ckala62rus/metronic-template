@@ -6,6 +6,7 @@ use App\Contracts\LessonCategoryRepositoryInterface;
 use App\Contracts\LessonCategoryServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class LessonCategoryService implements LessonCategoryServiceInterface
 {
@@ -80,5 +81,17 @@ class LessonCategoryService implements LessonCategoryServiceInterface
         return $this
             ->lessonCategoryRepository
             ->getAllLessonCategories();
+    }
+
+    /**
+     * Get all lesson categories with pagination
+     * @param int $limit
+     * @return LengthAwarePaginator
+     */
+    public function getAllLessonsCategoriesWithPagination(int $limit): LengthAwarePaginator
+    {
+        return $this
+            ->lessonCategoryRepository
+            ->getAllLessonsCategoriesWithPagination($limit);
     }
 }

@@ -2,35 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\LessonCategoryServiceInterface;
+use App\Http\Requests\Admin\Dashboard\LessonCategory\LessonCategoryPaginationRequest;
 use App\Http\Requests\Admin\Dashboard\LessonCategory\LessonCategoryStoreRequest;
 use App\Http\Requests\Admin\Dashboard\LessonCategory\LessonCategoryUpdateRequest;
-use App\Services\LessonCategoryService;
+use App\Http\Resources\Admin\Dashboard\LessonCategory\LessonCategoryResource;
+use Inertia\Inertia;
+use Inertia\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class LessonCategoryController extends BaseController
 {
     /**
-     * @var LessonCategoryService
+     * @var LessonCategoryServiceInterface
      */
-    protected LessonCategoryService $lessonCategoryService;
+    protected LessonCategoryServiceInterface $lessonCategoryService;
 
     /**
-     * @param LessonCategoryService $lessonCategoryService
+     * @param LessonCategoryServiceInterface $lessonCategoryService
      */
-    public function __construct(LessonCategoryService $lessonCategoryService)
+    public function __construct(LessonCategoryServiceInterface $lessonCategoryService)
     {
         $this->lessonCategoryService = $lessonCategoryService;
     }
 
+    /**
+     * return inertia vue page
+     * @return Response
+     */
     public function index()
     {
-        //
+        return Inertia::render('LessonCategory/LessonCategoryIndex');
     }
 
+    /**
+     * return inertia vue page
+     * @return Response
+     */
     public function create()
     {
-        //
+        return Inertia::render('LessonCategory/LessonCategoryCreate');
     }
 
     /**
@@ -82,9 +94,14 @@ class LessonCategoryController extends BaseController
         );
     }
 
+    /**
+     * return inertia vue page
+     * @param int $id
+     * @return Response
+     */
     public function edit(int $id)
     {
-        //
+        return Inertia::render('LessonCategory/LessonCategoryEdit', ['id' => $id]);
     }
 
     /**
@@ -133,5 +150,22 @@ class LessonCategoryController extends BaseController
             false,
             ResponseAlias::HTTP_OK
         );
+    }
+
+    /**
+     * Get all lesson category with pagination
+     * @param LessonCategoryPaginationRequest $request
+     * @return JsonResponse
+     */
+    public function getAllLessonCategoriesWithPagination(LessonCategoryPaginationRequest $request): JsonResponse
+    {
+        $categories = $this
+            ->lessonCategoryService
+            ->getAllLessonsCategoriesWithPagination($request->all()['limit']);
+
+        return response()->json([
+            'data' => LessonCategoryResource::collection($categories),
+            'count' => $categories->total()
+        ]);
     }
 }

@@ -6,6 +6,7 @@ use App\Contracts\LessonCategoryRepositoryInterface;
 use App\Models\LessonCategory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class LessonCategoryRepository extends BaseRepository implements LessonCategoryRepositoryInterface
 {
@@ -62,5 +63,15 @@ class LessonCategoryRepository extends BaseRepository implements LessonCategoryR
     public function getAllLessonCategories(): Collection
     {
         return $this->getAll();
+    }
+
+    /**
+     * Get all lesson categories with pagination
+     * @param int $limit
+     * @return LengthAwarePaginator
+     */
+    public function getAllLessonsCategoriesWithPagination(int $limit): LengthAwarePaginator
+    {
+        return $this->getAllWithPagination($limit);
     }
 }

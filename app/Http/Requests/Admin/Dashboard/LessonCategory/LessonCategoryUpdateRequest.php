@@ -26,7 +26,7 @@ class LessonCategoryUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:' . LessonCategory::class . ',name,' . $this->route('id'),
-            'description' => 'sometimes|string'
+            'description' => 'nullable|max:255|string'
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin\Dashboard\LessonCategory;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LessonCategoryStoreRequest extends FormRequest
+class LessonCategoryPaginationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class LessonCategoryStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255|unique:App\Models\LessonCategory,name',
-            'description' => 'sometimes'
+            'limit' => 'required|integer'
         ];
     }
 }
