@@ -5,7 +5,7 @@ namespace App\Http\Resources\Admin\Dashboard\Lesson;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LessonsAllResource extends JsonResource
+class LessonResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,13 +15,14 @@ class LessonsAllResource extends JsonResource
      */
     public function toArray($request)
     {
-//        return parent::toArray($request);
         return [
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'is_publish' => $this->is_publish,
+            'text' => $this->text,
+            'category_id' => $this->category_id,
             'category_name' => $this->category ? $this->category->name : null,
+            'is_publish' => $this->is_publish,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
         ];

@@ -38,6 +38,35 @@
                                     <div class="invalid-feedback">Описание статьи обязателено!</div>
                                 </div>
 
+                                <label>Категория</label>
+                                <div class="form-group select-form_group">
+                                    <el-select
+                                        v-model="form.category_id"
+                                        class="m-2 select-category"
+                                        placeholder="Категория"
+                                        size="large"
+                                    >
+                                        <el-option
+                                            v-for="category in categories"
+                                            :key="category.id"
+                                            :label="category.name"
+                                            :value="category.id"
+                                        />
+                                    </el-select>
+                                </div>
+
+                                <div class="form-group select-form_group">
+                                    <label class="col-3 col-form-label">Опубликовать</label>
+                                    <div class="col-3">
+                                        <span class="switch switch-sm switch-icon">
+                                            <label>
+                                                <input type="checkbox" v-model="form.is_publish" :checked="form.is_publish" name="select"/>
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+
                                 <div class="form-group" >
                                     <div v-show="errors.errorText" style="color: red">Статья не может быть пеустой!</div>
                                     <editor
@@ -83,23 +112,37 @@ export default {
         return {
             init: {
                 height: 500,
-                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-                toolbar: 'undo redo | blocks fontfamily fontsize |  bold italic underline strikethrough codesample | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                plugins: 'anchor autolink charmap codesample code emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar1: '' +
+                    'undo ' +
+                    'redo | ' +
+                    'blocks fontfamily fontsize |  ' +
+                    'bold italic underline strikethrough codesample code | ' +
+                    'link image media table | ' +
+                    'align lineheight | ' +
+                    'numlist bullist indent outdent | ' +
+                    'emoticons charmap | ' +
+                    'removeformat | ' +
+                    'h1 fontselect fontsizeselect fontsizeselect ',
                 file_picker_callback : this.elFinderBrowser,
                 relative_urls: false,
                 document_base_url : 'http://template/',
                 convert_urls : true,
+                // codesample_global_prismjs: true,
             },
             form: {
                 title: '',
                 description: '',
                 text: '',
+                category_id : null,
+                is_publish: false,
             },
             errors: {
                 errorTitle: false,
                 errorDescription: false,
                 errorText: false,
             },
+            categories: [],
         }
     },
 
@@ -191,8 +234,25 @@ export default {
                 this.form.title = lesson.title;
                 this.form.description = lesson.description;
                 this.form.text = lesson.text;
+                this.form.category_id = lesson.category_id;
+                this.form.is_publish = lesson.is_publish;
             })
         },
+
+        getLessonCategoryCollection(){
+            axios.get('/dashboard/category/collection')
+                .then(res => {
+                    // this.categories = res.data.data.categories;
+                    this.categories = [
+                        ...[{id: 0, name: 'Нет'}],
+                        ...res.data.data.categories
+                    ]
+                })
+        }
+    },
+
+    created() {
+        this.getLessonCategoryCollection();
     },
 
     mounted() {
@@ -202,5 +262,12 @@ export default {
 </script>
 
 <style scoped>
-
+.select-category {
+    width: 100%;
+    box-sizing: border-box;
+}
+.select-form_group {
+    margin-right: 4px;
+    margin-left: -7px;
+}
 </style>

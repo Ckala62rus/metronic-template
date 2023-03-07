@@ -13,8 +13,8 @@ use Tests\TestCase;
 
 class CategoryControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-//    use DatabaseMigrations;
+//    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /**
      * A basic feature test example.

@@ -39,6 +39,23 @@
                                     <div class="invalid-feedback">Описание статьи обязателено!</div>
                                 </div>
 
+                                <label>Категория</label>
+                                <div class="form-group select-form_group">
+                                    <el-select
+                                        v-model="form.category_id"
+                                        class="m-2 select-category"
+                                        placeholder="Категория"
+                                        size="large"
+                                    >
+                                        <el-option
+                                            v-for="category in categories"
+                                            :key="category.id"
+                                            :label="category.name"
+                                            :value="category.id"
+                                        />
+                                    </el-select>
+                                </div>
+
                                 <div class="form-group" >
                                     <div v-show="errors.errorText" style="color: red">Статья не может быть пеустой!</div>
                                     <editor
@@ -68,10 +85,12 @@ import Editor from  "@tinymce/tinymce-vue";
 
 export default {
     name: "LessonCreate",
+
     components: {
         Link,
         Editor
     },
+
     data() {
         return {
             init: {
@@ -87,12 +106,14 @@ export default {
                 title: '',
                 description: '',
                 text: '',
+                category_id: null,
             },
             errors: {
                 errorTitle: false,
                 errorDescription: false,
                 errorText: false,
             },
+            categories: [],
         }
     },
     methods: {
@@ -134,6 +155,7 @@ export default {
                 }
             });
         },
+
         saveLesson(){
             this.resetErrors();
 
@@ -168,10 +190,33 @@ export default {
                 errorTitle: false
             };
         },
+
+        getLessonCategoryCollection(){
+            axios.get('/dashboard/category/collection')
+                .then(res => {
+                    console.log(res.data.data.categories)
+                    // this.categories = res.data.data.categories;
+                    this.categories = [
+                        ...[{id: 0, name: 'Нет'}],
+                        ...res.data.data.categories
+                    ]
+                })
+        }
     },
+
+    created() {
+        this.getLessonCategoryCollection();
+    }
 }
 </script>
 
 <style scoped>
-
+.select-category {
+    width: 100%;
+    box-sizing: border-box;
+}
+.select-form_group {
+    margin-right: 4px;
+    margin-left: -7px;
+}
 </style>

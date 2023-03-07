@@ -168,4 +168,24 @@ class LessonCategoryController extends BaseController
             'count' => $categories->total()
         ]);
     }
+
+    /**
+     * Get all lesson categories collection
+     * @return JsonResponse
+     */
+    public function getAllLessonCategoryCollection(): JsonResponse
+    {
+        $categories = $this
+            ->lessonCategoryService
+            ->getAllLessonCategories();
+
+        return $this->response(
+            [
+                'categories' => LessonCategoryResource::collection($categories)
+            ],
+            'Get all lesson categories',
+            true,
+            ResponseAlias::HTTP_OK
+        );
+    }
 }

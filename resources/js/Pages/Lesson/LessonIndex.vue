@@ -19,10 +19,20 @@
                             ref="lessons-table"
                         >
                             <template v-slot:is_publish="{row}">
-                                <label class="checkbox checkbox-success">
-                                    <input type="checkbox" disabled="disabled" name="Checkboxes5" checked="checked" />
-                                    <span></span>
-                                </label>
+<!--                                <label class="checkbox checkbox-success">-->
+<!--                                    <input type="checkbox" disabled="disabled" name="Checkboxes5" checked="checked" />-->
+<!--                                    <span></span>-->
+<!--                                </label>-->
+                                <span v-if="row.is_publish" class="label label-inline label-light-success font-weight-bold">
+                                    Опубликовано
+                                </span>
+                                <span v-else class="label label-inline label-light-danger font-weight-bold">
+                                    Не опубликовано
+                                </span>
+                            </template>
+
+                            <template v-slot:category="{row}">
+                                {{row.category_name ? row.category_name : 'Нет категории'}}
                             </template>
 
                             <template v-slot:actions="{row}">
@@ -89,6 +99,7 @@ export default {
                 'title',
                 'description',
                 'is_publish',
+                'category',
                 'created_at',
                 'updated_at',
                 'actions'
@@ -101,6 +112,7 @@ export default {
                     title: 'Заголовок',
                     description: 'Описание',
                     is_publish: 'Публикация',
+                    category: 'Категория',
                     created_at: 'Время создания',
                     updated_at: 'Время обновления',
                     actions: 'Действия',
@@ -140,12 +152,6 @@ export default {
             }).then((result) => {
                 if (result.isConfirmed) {
                     axios.delete('/dashboard/lessons/' + row.id).then(response => {
-                        // this.$notify({
-                        //     group: 'foo',
-                        //     type: 'success',
-                        //     title: 'даление пользователя',
-                        //     text: 'Пользователь успешно удален'
-                        // });
                         Swal.fire(
                             'Удалено!',
                             'Статья удалена',
@@ -156,15 +162,9 @@ export default {
                 }
             })
         },
-
-        // getLessons(){
-        //     axios.post
-        // },
     },
 
-    mounted() {
-        // this.getLessons();
-    }
+    mounted() {}
 }
 </script>
 

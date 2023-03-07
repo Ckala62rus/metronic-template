@@ -43,6 +43,9 @@ class LessonService implements LessonServiceInterface
      */
     public function createLesson(array $data): Model
     {
+        if (isset($data['category_id']) && $data['category_id'] == 0) {
+            $data['category_id'] = null;
+        }
         return $this
             ->lessonRepository
             ->createLesson($data);
@@ -68,6 +71,9 @@ class LessonService implements LessonServiceInterface
      */
     public function updateLesson(int $id, array $data): ?Model
     {
+        if ($data['category_id'] == 0) {
+            $data['category_id'] = null;
+        }
         return $this
             ->lessonRepository
             ->updateLesson($id, $data);

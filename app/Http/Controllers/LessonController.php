@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\LessonServiceInterface;
 use App\Http\Requests\Admin\Dashboard\Lesson\LessonStoreRequest;
+use App\Http\Resources\Admin\Dashboard\Lesson\LessonResource;
 use App\Http\Resources\Admin\Dashboard\Lesson\LessonsAllResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -88,7 +89,7 @@ class LessonController extends BaseController
 
         if ($lesson) {
             return $this->response([
-                'lesson' => $lesson
+                'lesson' => LessonResource::make($lesson)
             ],
                 'Get lesson by id',
                 true,
