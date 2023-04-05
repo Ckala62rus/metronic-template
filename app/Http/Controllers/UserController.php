@@ -188,4 +188,9 @@ class UserController extends BaseController
             Response::HTTP_OK
         );
     }
+
+    public function test()
+    {
+        return view('test');
+    }
 }

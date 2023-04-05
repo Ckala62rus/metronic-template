@@ -48,7 +48,7 @@ Route::get('/', function () {
 //    return Inertia::render('Dashboard');
 //})->name('www');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['admin', 'auth'])->group(function () {
     Route::get('/www', function () {
         return Inertia::render('Dashboard');
     })->name('www');
@@ -110,6 +110,6 @@ Route::middleware('auth')->group(function () {
     Route::get('avatar/get', [UserController::class, 'getAvatar']);
 });
 
-Route::get('test', [UserController::class, 'test']);
+Route::get('test', [UserController::class, 'test'])->middleware('blog');
 
 require __DIR__.'/auth.php';
