@@ -110,4 +110,6 @@ Route::middleware('auth')->group(function () {
     Route::get('avatar/get', [UserController::class, 'getAvatar']);
 });
 
+Route::get('test', [UserController::class, 'test']);
+
 require __DIR__.'/auth.php';
