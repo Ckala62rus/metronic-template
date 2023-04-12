@@ -18,6 +18,7 @@ use App\Services\LessonCategoryService;
 use App\Services\LessonService;
 use App\Services\RoleService;
 use App\Services\UserService;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -47,8 +48,11 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UrlGenerator $url)
     {
-        //
+
+        // Использовать для публикации в ngrok
+        // ngrok http 127.0.0.1:8000
+//        $url->forceScheme('https');
     }
 }

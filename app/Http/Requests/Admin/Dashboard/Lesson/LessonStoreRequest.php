@@ -27,7 +27,9 @@ class LessonStoreRequest extends FormRequest
             'title' => 'required|string',
             'description' => 'required|string',
             'text' => 'required|string',
-            'category_id' => 'integer|nullable'
+            'category_id' => 'integer|nullable',
+            'preview' => 'file|image|nullable',
+            'is_publish' => 'required',
         ];
     }
 }

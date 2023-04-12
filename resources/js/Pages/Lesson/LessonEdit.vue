@@ -56,6 +56,19 @@
                                 </div>
 
                                 <div class="form-group select-form_group">
+                                    <label class="col-3 col-form-label">Превью статьи</label>
+                                    <div class="col-3">
+                                        <div class="large-12 medium-12 small-12 cell">
+                                            <label>
+                                                <input type="file" id="file" ref="file" accept="image/*" v-on:change="handleFileUpload()"/>
+                                            </label>
+<!--                                            <img class="lesson-preview" v-bind:src="imagePreview" v-show="showPreview"/>-->
+                                            <img class="lesson-preview" :src="imagePreview"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group select-form_group">
                                     <label class="col-3 col-form-label">Опубликовать</label>
                                     <div class="col-3">
                                         <span class="switch switch-sm switch-icon">
@@ -67,7 +80,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" >
+                                <div class="form-group">
                                     <div v-show="errors.errorText" style="color: red">Статья не может быть пеустой!</div>
                                     <editor
                                         api-key="pimvicjtxnosbo72b7zyixgqgvs7ka37ptz0ue5572hi9tzt"
@@ -123,11 +136,15 @@ export default {
                     'numlist bullist indent outdent | ' +
                     'emoticons charmap | ' +
                     'removeformat | ' +
-                    'h1 fontselect fontsizeselect fontsizeselect ',
+                    'h1 fontselect fontsizeselect fontsizeselect forecolor backcolor',
                 file_picker_callback : this.elFinderBrowser,
                 relative_urls: false,
                 document_base_url : 'http://template/',
                 convert_urls : true,
+                image_class_list: [
+                    { title: 'Left', value: 'align-left' },
+                    { title: 'Right', value: 'align-right' }
+                ],
                 // codesample_global_prismjs: true,
             },
             form: {
@@ -143,10 +160,51 @@ export default {
                 errorText: false,
             },
             categories: [],
+            preview_file: '', // preview lesson
+            showPreview: false,
+            imagePreview: '',
+            changePreview: false
         }
     },
 
     methods: {
+        handleFileUpload(){
+            this.preview_file = this.$refs.file.files[0];
+            /*
+               Initialize a File Reader object
+            */
+            let reader  = new FileReader();
+
+            /*
+              Add an event listener to the reader that when the file
+              has been loaded, we flag the show preview as true and set the
+              image to be what was read from the reader.
+            */
+            reader.addEventListener("load", function () {
+                this.showPreview = true;
+                this.imagePreview = reader.result;
+            }.bind(this), false);
+
+            /*
+              Check to see if the file is not empty.
+            */
+            if( this.preview_file ){
+                /*
+                  Ensure the file is an image file.
+                */
+                if ( /\.(jpe?g|png|gif)$/i.test( this.preview_file.name ) ) {
+                    /*
+                      Fire the readAsDataURL method which will read the file in and
+                      upon completion fire a 'load' event which we will listen to and
+                      display the image in the preview.
+                    */
+                    reader.readAsDataURL( this.preview_file );
+                }
+            }
+
+            this.changePreview = true;
+        },
+
         elFinderBrowser (callback, value, meta) {
             tinymce.activeEditor.windowManager.openUrl({
             title: 'File Manager',
@@ -185,10 +243,36 @@ export default {
                 }
             });
         },
+
         saveLesson(){
             this.resetErrors();
 
-            axios.put('/dashboard/lessons/' + this.id, this.form)
+            let formData = new FormData();
+
+            if(this.preview_file !== ''){
+                formData.append('preview', this.preview_file)
+            }
+
+            formData.append('text', this.form.text)
+            formData.append('title', this.form.title)
+            formData.append('is_publish', this.form.is_publish)
+            formData.append('category_id', this.form.category_id)
+            formData.append('description', this.form.description)
+            formData.append("_method", "PUT");
+
+            // axios.put('/dashboard/lessons/' + this.id, formData, {
+            //         headers: {
+            //             'Content-Type': 'multipart/form-data'
+            //         },
+            //     })
+            axios({
+                url: '/dashboard/lessons/' + this.id,
+                method: 'post',
+                data: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+            })
                 .then(response => {
                     // window.location.href = '/dashboard/lessons';
                     this.$notify({
@@ -236,6 +320,7 @@ export default {
                 this.form.text = lesson.text;
                 this.form.category_id = lesson.category_id;
                 this.form.is_publish = lesson.is_publish;
+                this.imagePreview = lesson.preview;
             })
         },
 
@@ -269,5 +354,9 @@ export default {
 .select-form_group {
     margin-right: 4px;
     margin-left: -7px;
+}
+.lesson-preview {
+    width: 500px;
+    height: auto;
 }
 </style>

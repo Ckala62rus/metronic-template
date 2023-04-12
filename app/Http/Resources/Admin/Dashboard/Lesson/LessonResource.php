@@ -25,6 +25,7 @@ class LessonResource extends JsonResource
             'is_publish' => $this->is_publish,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
+            'preview' => $this->preview
         ];
     }
 }

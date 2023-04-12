@@ -14,4 +14,5 @@ interface LessonServiceInterface
     public function getLessonById(int $id): ?Model;
     public function updateLesson(int $id, array $data): ?Model;
     public function deleteLesson(int $id): bool;
+    public function getLessonPreview(array $data, int $lessonId): ?string;
 }

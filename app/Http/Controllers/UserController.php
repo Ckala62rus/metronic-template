@@ -6,6 +6,7 @@ use App\Contracts\UserServiceInterface;
 use App\Http\Requests\Admin\Dashboard\User\UserCreateRequest;
 use App\Http\Requests\Admin\Dashboard\User\UserUpdateRequest;
 use App\Http\Resources\Admin\Dashboard\User\UserPaginateResource;
+use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -191,6 +192,7 @@ class UserController extends BaseController
 
     public function test()
     {
-        return view('test');
+        $content = Lesson::where('id', 2)->first();
+        return view('test', ['content' => $content]);
     }
 }

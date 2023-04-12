@@ -19,5 +19,6 @@ class BlogTemplateMiddleware extends HandleInertiaRequests
         return $next($request);
     }
 
-    protected $rootView = 'welcome';
+//    protected $rootView = 'welcome';
+    protected $rootView = 'front-app';
 }

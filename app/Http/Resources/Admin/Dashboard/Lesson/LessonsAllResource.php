@@ -24,6 +24,7 @@ class LessonsAllResource extends JsonResource
             'category_name' => $this->category ? $this->category->name : null,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
+            'preview' => $this->preview
         ];
     }
 }

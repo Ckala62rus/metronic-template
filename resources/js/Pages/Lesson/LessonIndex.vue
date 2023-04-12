@@ -18,6 +18,9 @@
                             :options="options"
                             ref="lessons-table"
                         >
+                            <template v-slot:preview="{row}">
+                                <img :src="row.preview" width="50" height="50">
+                            </template>
                             <template v-slot:is_publish="{row}">
 <!--                                <label class="checkbox checkbox-success">-->
 <!--                                    <input type="checkbox" disabled="disabled" name="Checkboxes5" checked="checked" />-->
@@ -96,6 +99,7 @@ export default {
             url: '/dashboard/lessons-pagination',
             columns: [
                 'id',
+                'preview',
                 'title',
                 'description',
                 'is_publish',
@@ -109,6 +113,7 @@ export default {
                 editableColumns:['text'],
                 headings: {
                     id: 'id',
+                    preview: 'Превью',
                     title: 'Заголовок',
                     description: 'Описание',
                     is_publish: 'Публикация',
