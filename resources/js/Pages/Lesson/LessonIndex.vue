@@ -96,7 +96,7 @@ export default {
 
     data() {
         return {
-            url: '/dashboard/lessons-pagination',
+            url: '/admin/lessons-pagination',
             columns: [
                 'id',
                 'preview',
@@ -156,7 +156,7 @@ export default {
                 cancelButtonText: 'Отмена',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.delete('/dashboard/lessons/' + row.id).then(response => {
+                    axios.delete('/admin/lessons/' + row.id).then(response => {
                         Swal.fire(
                             'Удалено!',
                             'Статья удалена',

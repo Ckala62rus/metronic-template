@@ -62,7 +62,7 @@ export default {
 
     data() {
         return {
-            url: '/dashboard/category/paginate',
+            url: '/admin/category/paginate',
             columns: [
                 'id',
                 'name',
@@ -111,7 +111,7 @@ export default {
                 cancelButtonText: 'Отмена',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.delete('/dashboard/category/' + row.id).then(response => {
+                    axios.delete('/admin/category/' + row.id).then(response => {
                         this.$notify({
                             group: 'foo',
                             type: 'success',

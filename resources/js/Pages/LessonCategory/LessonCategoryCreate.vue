@@ -97,7 +97,7 @@ export default {
         createCategory(){
             this.resetErrors()
 
-            axios.post('/dashboard/category', this.form)
+            axios.post('/admin/category', this.form)
                 .then(res => {
                     if (res.status === 201){
                         this.$notify({

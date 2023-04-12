@@ -129,7 +129,7 @@ export default {
        createUser(){
            this.resetErrors()
 
-           axios.post('/dashboard/user', this.form_profile)
+           axios.post('/admin/user', this.form_profile)
                .then(res => {
                    if (res.status === 201){
                        this.$notify({

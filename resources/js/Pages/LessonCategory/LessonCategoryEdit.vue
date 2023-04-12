@@ -104,7 +104,7 @@ export default {
         updateCategory(){
             this.resetErrors()
 
-            axios.put('/dashboard/category/' + this.id, this.form)
+            axios.put('/admin/category/' + this.id, this.form)
                 .then(res => {
                     if (res.status === 200){
                         this.$notify({
@@ -137,7 +137,7 @@ export default {
         },
 
         getLessonCategoryById(){
-            axios.get('/dashboard/category/' + this.id)
+            axios.get('/admin/category/' + this.id)
                 .then(res => {
                     let category = res.data.data.category;
                     this.form.name = category.name;

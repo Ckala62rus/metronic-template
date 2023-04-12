@@ -102,7 +102,7 @@ export default {
        createRole(){
            this.resetErrors()
 
-           axios.post('/dashboard/role', this.form)
+           axios.post('/admin/role', this.form)
                .then(res => {
                    if (res.status === 201){
                        this.$notify({
@@ -112,7 +112,7 @@ export default {
                            duration: 1000,
                            type: 'success'
                        });
-                       this.$inertia.visit('/dashboard/role')
+                       this.$inertia.visit('/admin/role')
                    }
                })
                .catch(err => {
@@ -135,7 +135,7 @@ export default {
        },
 
         getPermissions(){
-           axios.get('/dashboard/permission')
+           axios.get('/admin/permission')
                .then(response => {
                    this.permissions = response.data.data.permissions;
                })

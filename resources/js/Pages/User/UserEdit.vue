@@ -121,7 +121,7 @@ export default {
 
     methods: {
        updateUser(){
-           axios.put('/dashboard/user/' + this.id, this.form_profile)
+           axios.put('/admin/user/' + this.id, this.form_profile)
                .then(res => {
                    if (res.status === 200){
                        this.$notify({
@@ -140,7 +140,7 @@ export default {
        },
 
         getUser(){
-           axios.get('/dashboard/user/' + this.id)
+           axios.get('/admin/user/' + this.id)
                .then(response => {
                    let role_id = response.data.data.role.length > 0 ? response.data.data.role[0].id : null
                    let user = response.data.data.user;
@@ -156,7 +156,7 @@ export default {
         },
 
         getRoles(){
-           axios.get('/dashboard/role/all')
+           axios.get('/admin/role/all')
                .then(response => {
                    this.roles = response.data.data.roles
                })

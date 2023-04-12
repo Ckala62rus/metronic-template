@@ -39,10 +39,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/', function () {
-//    return Inertia::render('Auth/Login');
-    return Redirect::route('login');
-})->name('/');
+//Route::get('/', function () {
+////    return Inertia::render('Auth/Login');
+//    return Redirect::route('login');
+//})->name('/');
 
 //Route::get('/www', function () {
 //    return Inertia::render('Dashboard');
@@ -53,9 +53,9 @@ Route::middleware(['admin', 'auth'])->group(function () {
         return Inertia::render('Dashboard');
     })->name('www');
 
-    Route::get('dashboard/profile', [ProfileController::class, 'profilePage'])->name('metronic.profile');
+    Route::get('admin/profile', [ProfileController::class, 'profilePage'])->name('metronic.profile');
 
-    Route::group(['prefix' => 'dashboard'], function () {
+    Route::group(['prefix' => 'admin'], function () {
         // Lesson begin
         Route::get('lessons-pagination', [LessonController::class, 'getAllLessons'])->name('metronic.lesson.getAllLessons');
         Route::get('lessons', [LessonController::class, 'index'])->name('metronic.lesson.index');
@@ -103,13 +103,13 @@ Route::middleware(['admin', 'auth'])->group(function () {
     });
 
     // Permission
-    Route::get('dashboard/permission', [RolePermissionController::class, 'getPermissions']);
+    Route::get('admin/permission', [RolePermissionController::class, 'getPermissions']);
 
     //Avatar
     Route::post('avatar/set', [UserController::class, 'setAvatar']);
     Route::get('avatar/get', [UserController::class, 'getAvatar']);
 });
 
-Route::get('test', [UserController::class, 'test'])->middleware('blog');
+Route::get('/', [UserController::class, 'test'])->middleware('blog');
 
 require __DIR__.'/auth.php';

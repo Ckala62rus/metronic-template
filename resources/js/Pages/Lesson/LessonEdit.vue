@@ -266,7 +266,7 @@ export default {
             //         },
             //     })
             axios({
-                url: '/dashboard/lessons/' + this.id,
+                url: '/admin/lessons/' + this.id,
                 method: 'post',
                 data: formData,
                 headers: {
@@ -311,7 +311,7 @@ export default {
         },
 
         getLesson(id){
-            axios.get('/dashboard/lessons/' + id)
+            axios.get('/admin/lessons/' + id)
             .then(resp => {
                 let lesson = resp.data.data.lesson;
 
@@ -325,7 +325,7 @@ export default {
         },
 
         getLessonCategoryCollection(){
-            axios.get('/dashboard/category/collection')
+            axios.get('/admin/category/collection')
                 .then(res => {
                     // this.categories = res.data.data.categories;
                     this.categories = [

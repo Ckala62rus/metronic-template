@@ -115,7 +115,7 @@ export default {
 
     methods: {
        createRole(){
-           axios.put(`/dashboard/role/${this.id}`, this.form)
+           axios.put(`/admin/role/${this.id}`, this.form)
                .then(res => {
                    if (res.status === 200){
                        this.$notify({
@@ -134,14 +134,14 @@ export default {
        },
 
         getPermissions(){
-           axios.get('/dashboard/permission')
+           axios.get('/admin/permission')
                .then(response => {
                    this.permissions = response.data.data.permissions;
                })
         },
 
         getRoleById(){
-           axios.get(`/dashboard/role/${this.id}`)
+           axios.get(`/admin/role/${this.id}`)
                .then(responce => {
                    let role = responce.data.data.role;
                    this.form.role.name = role.name;

@@ -45,7 +45,7 @@ export default {
 
     methods: {
         loadLesson(){
-            axios.get('/dashboard/lessons/' + this.id)
+            axios.get('/admin/lessons/' + this.id)
                 .then(res => {
                     let lesson = res.data.data.lesson;
                     this.title = lesson.title;

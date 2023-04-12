@@ -159,10 +159,10 @@ export default {
         saveLesson(){
             this.resetErrors();
 
-            axios.post('/dashboard/lessons', this.form)
+            axios.post('/admin/lessons', this.form)
                 .then(response => {
                     // console.log(response);
-                    window.location.href = '/dashboard/lessons'
+                    window.location.href = '/admin/lessons'
                 })
                 .catch(err => {
                     let errors = err.response.data.errors
@@ -192,7 +192,7 @@ export default {
         },
 
         getLessonCategoryCollection(){
-            axios.get('/dashboard/category/collection')
+            axios.get('/admin/category/collection')
                 .then(res => {
                     console.log(res.data.data.categories)
                     // this.categories = res.data.data.categories;
