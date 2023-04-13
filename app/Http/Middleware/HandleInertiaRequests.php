@@ -23,6 +23,15 @@ class HandleInertiaRequests extends Middleware
         return parent::version($request);
     }
 
+    public function rootView(Request $request)
+    {
+        if($request->is(['admin/*', 'login', 'dashboard'])){
+            return 'app';
+        }
+        return 'front';
+
+    }
+
     /**
      * Define the props that are shared by default.
      *

@@ -55,6 +55,20 @@ export default {
         },
     },
 
+    watch: {
+        // Observe paste instance defined in Vue data using the deep option
+        //for code syntax tinymce result
+        'text':  {
+            handler(value) {
+                let editor = document.querySelector('.single-top');
+                this.$nextTick(()=> {
+                    Prism.highlightAll();
+                });
+            },
+            deep: true
+        },
+    },
+
     mounted() {
         this.loadLesson();
     }

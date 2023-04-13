@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\LessonCategoryController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
@@ -49,8 +50,8 @@ Route::middleware('auth')->group(function () {
 //})->name('www');
 
 Route::middleware(['admin', 'auth'])->group(function () {
-    Route::get('/www', function () {
-        return Inertia::render('Dashboard');
+    Route::get('/admin', function () {
+        return Inertia::render('admin/dashboard');
     })->name('www');
 
     Route::get('admin/profile', [ProfileController::class, 'profilePage'])->name('metronic.profile');
@@ -110,6 +111,9 @@ Route::middleware(['admin', 'auth'])->group(function () {
     Route::get('avatar/get', [UserController::class, 'getAvatar']);
 });
 
-Route::get('/', [UserController::class, 'test'])->middleware('blog');
+/* Front */
+Route::get('/', [FrontController::class, 'index'])->middleware('blog')->name('front.index');
+Route::get('/post/{id}', [FrontController::class, 'post'])->middleware('blog')->name('front.post');
+Route::get('/data/post/{id}', [FrontController::class, 'singlePost'])->middleware('blog')->name('front.single-post');
 
 require __DIR__.'/auth.php';

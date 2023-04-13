@@ -1,29 +1,25 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE HTML>
 <html>
 <head>
     <title>Voguish a Blogging Category Flat Bootstarp Responsive Website Template | Single :: w3layouts</title>
-    <link href="front/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
-    <link href="front/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset("front/css/bootstrap.css") }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset("front/css/style.css") }}" rel="stylesheet" type="text/css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Voguish Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900' rel='stylesheet' type='text/css'>
-    <script src="front/js/jquery.min.js"></script>
-    <link rel="stylesheet" href="front/css/flexslider.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="front/prism/prism.css" type="text/css" media="screen" />
-    <script src="front/js/responsiveslides.min.js"></script>
-    <script src="front/prism/prism.js"></script>
+    <script src="{{ asset("front/js/jquery.min.js") }}" type="text/javascript"></script>
+{{--    <link rel="stylesheet" href="front/css/flexslider.css" type="text/css" media="screen" />--}}
+
+    <script src="{{ asset("front/js/responsiveslides.min.js") }}" type="text/javascript"></script>
+{{--    <link href="{{ asset("front/prism/prism.css") }}" rel="stylesheet" type="text/css"/>--}}
+{{--    <script src="{{ asset("front/prism/prism.js") }}" type="text/javascript"></script>--}}
+
+    <link href="/front/prism/prism.css" rel="stylesheet" type="text/css"/>
+    <script src="/front/prism/prism.js" type="text/javascript"></script>
     <script href="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.4.1/tinymce.min.js"></script>
-
-
     <script>
         $(function () {
             $("#slider").responsiveSlides({
@@ -36,7 +32,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
 
     </script>
-
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -100,8 +95,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             padding-right: 1rem;
         }
     </style>
+
+    <!-- script-for-nav -->
+    <script>
+        $( "span.menu" ).click(function() {
+            $( ".head-nav ul" ).slideToggle(300, function() {
+                // Animation complete.
+            });
+        });
+    </script>
+    <!-- script-for-nav -->
+
+    <!-- Scripts -->
+    @routes
+    @vite(['resources/js/front-app.js', "resources/js/Pages/{$page['component']}.vue"])
+    @inertiaHead
 </head>
 <body>
-@yield('content')
+    @inertia
 </body>
 </html>

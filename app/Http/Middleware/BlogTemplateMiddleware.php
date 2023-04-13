@@ -20,5 +20,5 @@ class BlogTemplateMiddleware extends HandleInertiaRequests
     }
 
 //    protected $rootView = 'welcome';
-    protected $rootView = 'front-app';
+    protected $rootView = 'front';
 }

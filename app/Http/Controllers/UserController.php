@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -179,7 +180,9 @@ class UserController extends BaseController
         /** @var User $user */
         $user = Auth::user();
 
-        $url = empty($user->getFirstMediaUrl('avatar')) ? null : $user->getFirstMediaUrl('avatar', 'preview');
+        $url = empty($user->getFirstMediaUrl('avatar'))
+            ? null
+            : $user->getFirstMediaUrl('avatar', 'preview');
 
         return $this->response([
             'url' => $url
@@ -188,11 +191,5 @@ class UserController extends BaseController
             true,
             Response::HTTP_OK
         );
-    }
-
-    public function test()
-    {
-        $content = Lesson::where('id', 2)->first();
-        return view('test', ['content' => $content]);
     }
 }
