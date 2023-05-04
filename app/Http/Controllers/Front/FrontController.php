@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Front;
 
 use App\Contracts\LessonServiceInterface;
 use App\Http\Controllers\BaseController;
+use App\Models\Lesson;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,9 +29,13 @@ class FrontController extends BaseController
     /**
      * Get view with all blogs
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('Front/Index');
+        $data = $request->all();
+
+        $lessons = Lesson::paginate(1);
+
+        return Inertia::render('Front/Index', ['lessons' => $lessons]);
     }
 
     /**
@@ -72,5 +78,27 @@ class FrontController extends BaseController
             true,
             ResponseAlias::HTTP_OK
         );
+    }
+
+    /**
+     * Get all lessons with pagination
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getAllLessons(Request $request): JsonResponse
+    {
+        $data = $request->all();
+
+//        $lessons = $this
+//            ->lessonService
+//            ->getAllLessonsPagination(1);
+
+        $lessons = Lesson::paginate(2);
+
+        return \response()->json(['lessons' => $lessons], ResponseAlias::HTTP_OK);
+//        return \response()->json([
+//            'data' => $lessons->collect(),
+//            'count' => $lessons->total(),
+//        ], ResponseAlias::HTTP_OK);
     }
 }

@@ -115,5 +115,6 @@ Route::middleware(['admin', 'auth'])->group(function () {
 Route::get('/', [FrontController::class, 'index'])->middleware('blog')->name('front.index');
 Route::get('/post/{id}', [FrontController::class, 'post'])->middleware('blog')->name('front.post');
 Route::get('/data/post/{id}', [FrontController::class, 'singlePost'])->middleware('blog')->name('front.single-post');
+Route::get('/data/post-paginate', [FrontController::class, 'getAllLessons'])->middleware('blog')->name('front.post-pagination');
 
 require __DIR__.'/auth.php';

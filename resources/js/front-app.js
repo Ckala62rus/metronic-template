@@ -17,8 +17,7 @@ import Notifications from '@kyvg/vue3-notification'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-
-import { Bootstrap5Pagination, Bootstrap4Pagination } from 'laravel-vue-pagination';
+import FrontLayout from "@/Layouts/FrontLayout.vue";
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -31,7 +30,7 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.vue")
         );
         page.then((module) => {
-            module.default.layout = module.default.layout || Metronic;
+            module.default.layout = FrontLayout;
         });
         return page;
     },
@@ -44,8 +43,6 @@ createInertiaApp({
             .use(VueSweetalert2)
             .use(Notifications)
             .use(ElementPlus)
-            .use(Bootstrap5Pagination)
-            .use(Bootstrap4Pagination)
             .mount(el);
     },
 });
