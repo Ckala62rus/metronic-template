@@ -36,7 +36,7 @@ class RoleControllerTest extends TestCase
         $this->actingAs($user);
 
         // act
-        $response = $this->post('/dashboard/role', $data)->decodeResponseJson();
+        $response = $this->post('/admin/role', $data)->decodeResponseJson();
 
         // assert
         $this->assertTrue($response['status']);
@@ -67,7 +67,7 @@ class RoleControllerTest extends TestCase
         $this->actingAs($user);
 
         // act
-        $response = $this->post('/dashboard/role', $data)->decodeResponseJson();
+        $response = $this->post('/admin/role', $data)->decodeResponseJson();
 
         // assert
         $this->assertTrue(true);
