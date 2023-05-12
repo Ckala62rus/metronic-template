@@ -32,7 +32,7 @@ class CategoryControllerTest extends TestCase
         // act
         // assert
         /** @var MakesHttpRequests $category */
-        $this->post('dashboard/category', [
+        $this->post('admin/category', [
         ])->assertSessionHasErrors(['name']);
     }
 
@@ -44,7 +44,7 @@ class CategoryControllerTest extends TestCase
         // act
         /** @var MakesHttpRequests $category */
         $response = $this->post(
-            'dashboard/category', ['name' => 'new_category']);
+            'admin/category', ['name' => 'new_category']);
 
         // assert
         $response->assertJson([
@@ -63,7 +63,7 @@ class CategoryControllerTest extends TestCase
 
         // act
         /** @var MakesHttpRequests $category */
-        $response = $this->get('dashboard/category/' . random_int(1,10));
+        $response = $this->get('admin/category/' . random_int(1,10));
 
         // assert
         $response->assertJson(['status' => false]);
@@ -77,7 +77,7 @@ class CategoryControllerTest extends TestCase
         $this->actingAs(User::factory()->create());
 
         // act
-        $response = $this->get('dashboard/category/' . $category->id);
+        $response = $this->get('admin/category/' . $category->id);
 
         // assert
         $response->assertStatus(Response::HTTP_OK);
@@ -100,7 +100,7 @@ class CategoryControllerTest extends TestCase
         $oldName = $category->name;
 
         // act
-        $response = $this->put('dashboard/category/' . $category->id, [
+        $response = $this->put('admin/category/' . $category->id, [
             'name' => $oldName
         ]);
 
@@ -123,7 +123,7 @@ class CategoryControllerTest extends TestCase
         $this->withoutMiddleware(VerifyCsrfToken::class);
 
         // act
-        $response = $this->delete('dashboard/category/' . $category->id);
+        $response = $this->delete('admin/category/' . $category->id);
 
         // assert
         $response->assertJson([
@@ -141,8 +141,8 @@ class CategoryControllerTest extends TestCase
 
         $categoryId = $category->id;
         // act
-        $this->delete('dashboard/category/' . $categoryId);
-        $response = $this->delete('dashboard/category/' . $categoryId);
+        $this->delete('admin/category/' . $categoryId);
+        $response = $this->delete('admin/category/' . $categoryId);
 
         // assert
         $response->assertJson([
