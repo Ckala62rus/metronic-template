@@ -18,7 +18,7 @@
                         <div class="mb-20">
                             <h3>Sign In To Admin</h3>
 
-                            <p class="error__auth">invalid login or password input</p>
+                            <p v-if="invalidCredentials" class="error__auth error__credentials">invalid login or password input</p>
                             <p class="opacity-60 font-weight-bold">Enter your details to login to your account:</p>
 
                         </div>
@@ -76,15 +76,20 @@ export default {
                 email: '',
                 password: ''
             },
+            invalidCredentials: false,
         }
     },
     methods: {
         sigIn(){
-            console.log('send auth credentials')
+            this.invalidCredentials = false;
             axios.post('login', this.form).then(res =>{
-                console.log(res.status)
                 if (res.status === 200) {
                     window.location = '/dashboard';
+                }
+            })
+            .catch(err => {
+                if (err.response.status === 422) {
+                    this.invalidCredentials = true;
                 }
             })
         },
@@ -93,5 +98,7 @@ export default {
 </script>
 
 <style scoped>
-
+.error__credentials {
+    color: red;
+}
 </style>
