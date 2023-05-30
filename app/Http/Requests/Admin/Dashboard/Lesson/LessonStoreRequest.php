@@ -29,7 +29,7 @@ class LessonStoreRequest extends FormRequest
             'text' => 'required|string',
             'category_id' => 'integer|nullable',
             'preview' => 'file|image|nullable',
-            'is_publish' => 'nullable|boolean',
+            'is_publish' => 'nullable',
         ];
     }
 }
